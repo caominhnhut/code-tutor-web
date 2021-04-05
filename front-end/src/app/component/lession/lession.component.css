@@ -1,0 +1,48 @@
+.lessions {
+    width: 80%;
+    margin: auto;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.lessions .lession {
+    background-color: #FFFFFF;
+    color: #777777;
+    margin-bottom: 20px;
+    height: 80px;
+    box-shadow: 4px 3px 24px rgb(223 227 234 / 74%);
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.lessions .lession:hover {
+    background-color: #cccccc;
+}
+
+.lessions .lession a {
+    text-decoration: none;
+    color: #777777;
+}
+
+.lessions .lession .sub-info {
+    font-size: 12px;
+}
+
+.lessions .lession .infor {
+    padding-top: 12px;
+    border-left: 3px solid red;
+}
+
+.lessions .lession .likes {
+    height: 80px;
+    background-color: #20ad96;
+    color: white;
+    padding: 15px;
+    padding-left: 30px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.btn-warning {
+    color: white;
+}

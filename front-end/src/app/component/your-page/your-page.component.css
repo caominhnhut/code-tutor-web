@@ -1,0 +1,31 @@
+.your-page .navigation {
+    padding: 30px;
+}
+
+.your-page .navigation .nav {
+    padding-top: 30px;
+    margin-bottom: 5px;
+    box-shadow: 4px 3px 24px rgb(223 227 234 / 74%);
+    border-radius: 10px;
+    position: relative;
+    padding: 20px;
+    width: 70%;
+}
+
+.your-page .navigation .nav a {
+    text-decoration: none;
+}
+
+.side-nav-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #eee;
+}
+
+.sidenav {
+    width: 200px;
+    background: rgb(15, 62, 9);
+}

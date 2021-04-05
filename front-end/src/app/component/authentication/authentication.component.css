@@ -1,0 +1,23 @@
+.authentication {
+    box-shadow: 4px 3px 24px rgb(223 227 234 / 74%);
+    width: 30%;
+    margin: 100px auto;
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 1px;
+}
+
+.authentication input {
+    width: 80%;
+    height: 45px;
+    border: 1px solid #cccccc;
+    outline: none;
+    padding-left: 20px;
+    color: #666666;
+    margin-top: 30px;
+}
+
+.authentication .alert {
+    width: 90%;
+    margin: 30px auto;
+}

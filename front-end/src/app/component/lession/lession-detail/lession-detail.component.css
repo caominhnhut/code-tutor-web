@@ -1,0 +1,62 @@
+.title {
+    height: 100px;
+    width: 80%;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.comment-content img,
+.title img {
+    height: 70px;
+    width: 70px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.title .infor {
+    color: #aaaaaa;
+}
+
+.content {
+    width: 80%;
+    margin: auto;
+    background-color: #FFFFFF;
+    margin-bottom: 100px;
+    box-shadow: 4px 3px 24px rgb(223 227 234 / 74%);
+    padding: 30px;
+}
+
+.content .infor input {
+    width: 80%;
+    height: 45px;
+    border: 1px solid #cccccc;
+    padding-left: 10px;
+    color: #495057;
+    border-radius: 5px;
+    outline: none;
+}
+
+.content .infor .col-md-6 {
+    padding: 0px;
+}
+
+.content .infor .txt-email {
+    float: right;
+}
+
+.content .type-comment {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.comments {
+    padding-top: 20px;
+}
+
+.comment-contents {
+    margin-top: 50px;
+}
+
+.comment-content {
+    margin-bottom: 50px;
+}

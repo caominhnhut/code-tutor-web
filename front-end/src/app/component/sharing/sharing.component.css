@@ -1,0 +1,102 @@
+.sharing {
+    width: 60%;
+    margin: auto;
+    padding-top: 50px;
+}
+
+.sharing .post {
+    padding-top: 30px;
+    margin-bottom: 30px;
+    box-shadow: 4px 3px 24px rgb(223 227 234 / 74%);
+    border-radius: 10px;
+    position: relative;
+    padding: 20px;
+}
+
+.comment-content img,
+.sharing .post .title img {
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.sharing .post .title h5 {
+    margin: 0px;
+}
+
+.sharing .post .title i {
+    font-size: 12px;
+}
+
+.sharing .post .post-content {
+    margin-bottom: 20px;
+}
+
+.sharing .post .post-content .post-content-multiple-images,
+.sharing .post .post-content .post-content-two-images,
+.sharing .post .post-content .post-content-single-image {
+    max-height: 400px;
+}
+
+.sharing .post .post-content .post-content-single-image img {
+    height: 400px;
+    width: 80%;
+    object-fit: cover;
+}
+
+.sharing .post .post-content .post-content-two-images img {
+    height: 400px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.sharing .post .post-content .post-content-multiple-images .col-md-6,
+.sharing .post .post-content .post-content-two-images .col-md-6 {
+    padding: 0px;
+}
+
+.sharing .post .post-content .post-content-multiple-images .small-image {
+    height: 200px;
+}
+
+.sharing .post .post-content .post-content-multiple-images .small-image img {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.sharing .post .post-content .post-content-multiple-images .big-image img {
+    height: 400px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.sharing .post .post-comments .actions {
+    border-bottom: 1px solid #cccccc;
+    margin: 10px;
+    width: 15%;
+}
+
+.sharing .post .post-content p {
+    padding: 20px;
+}
+
+.sharing .post .post-comments input {
+    width: 100%;
+    height: 45px;
+    border: 1px solid #cccccc;
+    padding-left: 10px;
+    color: #495057;
+    border-radius: 5px;
+    outline: none;
+    margin-bottom: 20px;
+}
+
+.sharing .post .post-comments .comment-contents {
+    margin-top: 50px;
+}
+
+.sharing .post .post-comments .comment-content {
+    margin-bottom: 50px;
+}

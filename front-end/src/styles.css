@@ -1,0 +1,15 @@
+.row {
+    margin: 0px;
+    padding: 0px;
+}
+
+.btn-custom {
+    background-color: #20ad96;
+    color: white;
+    box-shadow: 4px 3px 24px rgb(32 173 150);
+    height: 45px;
+    border-radius: 5px;
+    border: none;
+    font-weight: 500;
+    padding: 10px;
+}
