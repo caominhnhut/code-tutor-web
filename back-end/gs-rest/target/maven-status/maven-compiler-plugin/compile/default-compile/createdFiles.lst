@@ -1,0 +1,10 @@
+com\gls\gs\rest\config\AuthenticationFilter.class
+com\gls\gs\rest\GoShopApplication.class
+com\gls\gs\rest\controller\AuthenticationRestService.class
+com\gls\gs\rest\factory\jwt\TokenHelper.class
+com\gls\gs\rest\controller\UserRestService.class
+com\gls\gs\rest\config\RestAuthenticationEntryPoint.class
+com\gls\gs\rest\config\WebSecurityConfig.class
+com\gls\gs\rest\controller\FileRestService.class
+com\gls\gs\rest\model\AuthenticationRequest.class
+com\gls\gs\rest\model\AuthenticationResponse.class
