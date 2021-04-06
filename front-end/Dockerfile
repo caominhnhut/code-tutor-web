@@ -1,27 +1,22 @@
 # Stage 1: Compile and Build angular codebase
 
 # Use official node image as the base image
-FROM node:10.16.3 as build
+FROM node:10.16.3 as builder
 
 # Set the working directory
-WORKDIR /usr/local/app
+WORKDIR /app
 
-# Add the source code to app
-COPY ./ /usr/local/app/
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
-# Install all the dependencies
+# install and cache app dependencies
+COPY package.json /app/package.json
+
 RUN npm install
+RUN npm install -g @angular/cli@11.2.4
 
-# Generate the build of the application
-RUN npm run build
+# add app
+COPY . /app
 
-# Stage 2: Serve app with nginx server
-
-# Use official nginx image as the base image
-FROM nginx:latest
-
-# Copy the build output to replace the default nginx contents.
-COPY --from=build /usr/local/app/dist/front-end /usr/share/nginx/html
-
-# Expose port 80
-EXPOSE 80
+# start app
+CMD ng serve --host 0.0.0.0
