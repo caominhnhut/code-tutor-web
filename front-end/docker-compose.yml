@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+
+  front-end:
+    container_name: code-tutor
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - '4201:4200'
