@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonService } from './service/common.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'code-tutor';
+
+  constructor(private commonService: CommonService){};
+
+  scrollToElement(elementId: string): void {
+    this.commonService.scrollToElement(elementId);
+  }
 }

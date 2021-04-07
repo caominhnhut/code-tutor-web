@@ -68,8 +68,17 @@ input:focus+label {
     border-bottom: 1px solid #cccccc;
 }
 
-.user-profile .info .tag {
+.user-profile .info .tag1 {
     background-color: #FF9900;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+.user-profile .info .tag2 {
+    background-color: #0099CC;
     color: white;
     padding: 10px;
     border-radius: 10px;
@@ -99,4 +108,8 @@ input:focus+label {
     border-top: 1px solid #cccccc;
     width: 80%;
     padding-top: 15px;
+}
+
+.user-profile .subjects{
+    margin-top: 20px;
 }

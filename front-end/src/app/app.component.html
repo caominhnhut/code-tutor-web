@@ -10,19 +10,18 @@
     <div class="navigation">
         <ul>
             <li><a routerLink="/home"><b>Home</b></a></li>
-            <li><a routerLink="#"><b>Courses</b></a></li>
+            <li><a href="javascript:void(0)" (click)="scrollToElement('courses')"><b>Courses</b></a></li>
             <li><a routerLink="/sharing"><b>Sharing</b></a></li>
             <li><a routerLink="/recruitment"><b>Recruitment</b></a></li>
             <li><a routerLink="/document"><b>Document</b></a></li>
             <li class="login-section"><a routerLink="/authenticate"><b>Login</b></a></li>
             <li><a routerLink="/register"><b>Register</b></a></li>
-            <li><a routerLink="/your-page/user-profile"><b>Your Page</b></a></li>
         </ul>
     </div>
     <div class="contact-me">
         <div class="caption"><b>Getting Programming <br> Became <i>Easier</i> </b></div>
         <div class="description">Learning to write programs stretches your mind, and helps you think better. <br> Creates a way of thinking about things that I think is helpful in all domains.</div>
-        <button class="btn-custom">CONTACT ME</button>
+        <button class="btn-custom" (click)="scrollToElement('contact-me')">CONTACT ME</button>
     </div>
 </div>
 <router-outlet></router-outlet>
