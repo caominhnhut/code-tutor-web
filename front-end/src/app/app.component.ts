@@ -11,7 +11,7 @@ export class AppComponent {
 
   constructor(private commonService: CommonService){};
 
-  scrollToElement(elementId: string): void {
+  public scrollToElement(elementId: string): void {
     this.commonService.scrollToElement(elementId);
   }
 }

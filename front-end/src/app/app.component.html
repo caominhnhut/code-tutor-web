@@ -21,10 +21,24 @@
     <div class="contact-me">
         <div class="caption"><b>Getting Programming <br> Became <i>Easier</i> </b></div>
         <div class="description">Learning to write programs stretches your mind, and helps you think better. <br> Creates a way of thinking about things that I think is helpful in all domains.</div>
-        <button class="btn-custom" (click)="scrollToElement('contact-me')">CONTACT ME</button>
+        <button id="btn-contact-me" class="btn-custom" (click)="scrollToElement('contact-us')">CONTACT ME</button>
     </div>
 </div>
 <router-outlet></router-outlet>
+<div id="contact-us" class="row contact-us">
+    <div class="col-md-7 description">
+        <b class="description-1">Like What You're Learning</b><br>
+        <b class="description-2">Get Started</b><br>
+        <b class="description-2">TODAY!</b><br>
+        <i>Work at home or in the office, lead one project or become a freelancer, write code in the morning or late at night <br> You decide only.</i>
+    </div>
+    <div class="col-md-5 description">
+        <input type="text" placeholder="Your name">
+        <input type="text" placeholder="Email">
+        <input type="text" placeholder="Message"><br>
+        <button class="btn btn-info">REGISTER COURSE</button>
+    </div>
+</div>
 <div class="footer">
     <div class="row">
         <div class="col-md-7">The map will be show here soon...</div>

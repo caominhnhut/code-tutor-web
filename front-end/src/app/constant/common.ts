@@ -1,0 +1,1 @@
+export const BUTTON_CONTACT_ME: string = "btn-contact-me";

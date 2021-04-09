@@ -138,3 +138,39 @@
     z-index: 1000;
     top: -60px;
 }
+
+.contact-us {
+    background-color: #20ad96;
+    height: 350px;
+    margin-bottom: 90px;
+}
+
+.contact-us .description {
+    color: white;
+    padding: 30px;
+}
+
+.contact-us .description-1 {
+    color: white;
+    font-size: 50px;
+}
+
+.contact-us .description-2 {
+    color: #66FFCC;
+    font-size: 50px;
+}
+
+.contact-us input {
+    width: 65%;
+    height: 45px;
+    border: none;
+    border-radius: 25px;
+    padding-left: 30px;
+    outline: none;
+    color: gray;
+    margin: 15px;
+}
+
+.contact-us button {
+    margin-left: 2%;
+}

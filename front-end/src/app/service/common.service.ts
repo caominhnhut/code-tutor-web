@@ -7,7 +7,7 @@ export class CommonService {
 
   constructor() { }
 
-  scrollToElement(elementId: string): void {
+  public scrollToElement(elementId: string): void {
     let element = document.getElementById(elementId);
     if(element != null){
 		  element.scrollIntoView({behavior:"smooth"});
