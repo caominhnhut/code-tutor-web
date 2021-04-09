@@ -3,28 +3,45 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.3</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <artifactId>code-tutor</artifactId>
+        <groupId>vn.green.codetutor</groupId>
+        <version>2021.1.0</version>
     </parent>
 
-    <groupId>vn.green.codetutor</groupId>
-    <artifactId>code-tutor</artifactId>
-    <version>2021.1.0</version>
+    <artifactId>back-end</artifactId>
     <packaging>pom</packaging>
-    <name>code-tutor-api</name>
+    <name>back-end</name>
 
     <modules>
-        <module>back-end</module>
+        <module>ct-persistent</module>
+        <module>ct-core</module>
+        <module>ct-rest</module>
+        <module>ct-liquibase</module>
+        <module>ct-document</module>
+        <module>ct-common</module>
     </modules>
 
-    <properties>
-        <maven.compile.source>1.8</maven.compile.source>
-        <maven.compile.target>1.8</maven.compile.target>
-        <version.maven-sonar>3.7.0.1746</version.maven-sonar>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+    <dependencies>
+        <!-- Spring Boot dependencies -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.4.1.Final</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <pluginManagement>

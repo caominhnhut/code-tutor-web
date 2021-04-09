@@ -1,0 +1,12 @@
+version: '2'
+services:
+  back-end:
+    container_name: code-tutor-back-end
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
+      - 9960:9990
+      - 8787:8787
