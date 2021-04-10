@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>code-tutor</artifactId>
-        <groupId>vn.green.codetutor</groupId>
-        <version>2021.1.0</version>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.4.3</version>
+        <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
+    <groupId>vn.green.codetutor</groupId>
     <artifactId>back-end</artifactId>
     <packaging>pom</packaging>
     <name>back-end</name>
+    <version>2021.1.0</version>
 
     <modules>
         <module>ct-persistent</module>
@@ -20,6 +26,13 @@
         <module>ct-document</module>
         <module>ct-common</module>
     </modules>
+
+    <properties>
+        <maven.compile.source>1.8</maven.compile.source>
+        <maven.compile.target>1.8</maven.compile.target>
+        <version.maven-sonar>3.7.0.1746</version.maven-sonar>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
         <!-- Spring Boot dependencies -->
