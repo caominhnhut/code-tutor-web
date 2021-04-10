@@ -17,19 +17,6 @@
         </createTable>
 
         <createSequence sequenceName="authority_id_seq" minValue="1" startValue="1" incrementBy="1" />
-
-        <sql endDelimiter="/">
-            CREATE OR REPLACE TRIGGER AUTHORITY_ID_SEQ_TRG
-            BEFORE INSERT ON AUTHORITY
-            FOR EACH ROW
-            WHEN (new.ID IS NULL)
-            BEGIN
-            SELECT AUTHORITY_ID_SEQ.NEXTVAL
-            INTO :new.id
-            FROM dual;
-            END;
-            /
-        </sql>
     </changeSet>
 
     <changeSet id="users table" author="Nhut.Nguyen">
@@ -49,19 +36,6 @@
         </createTable>
 
         <createSequence sequenceName="users_id_seq" minValue="1" startValue="1" incrementBy="1" />
-
-        <sql endDelimiter="/">
-            CREATE OR REPLACE TRIGGER USERS_ID_SEQ_TRG
-            BEFORE INSERT ON USERS
-            FOR EACH ROW
-            WHEN (new.ID IS NULL)
-            BEGIN
-            SELECT USERS_ID_SEQ.NEXTVAL
-            INTO :new.id
-            FROM dual;
-            END;
-            /
-        </sql>
     </changeSet>
 
     <changeSet id="authority_role table" author="Nhut.Nguyen">
@@ -69,12 +43,11 @@
             <column name="id" type="BIGINT">
                 <constraints nullable="false" />
             </column>
-            <column name="user_id" type="java.sql.Types.VARCHAR(128)" />
-            <column name="authority_id" type="java.sql.Types.VARCHAR(128)" />
+            <column name="user_id" type="BIGINT" />
+            <column name="authority_id" type="BIGINT" />
         </createTable>
 
         <addForeignKeyConstraint baseTableName="authority_role" baseColumnNames="user_id" constraintName="fk_authority_role_users" referencedTableName="users" referencedColumnNames="id" />
-
         <addForeignKeyConstraint baseTableName="authority_role" baseColumnNames="authority_id" constraintName="fk_authority_role_authority" referencedTableName="authority" referencedColumnNames="id" />
     </changeSet>
 
@@ -95,18 +68,5 @@
         </createTable>
 
         <createSequence sequenceName="document_id_seq" minValue="1" startValue="1" incrementBy="1" />
-
-        <sql endDelimiter="/">
-            CREATE OR REPLACE TRIGGER DOCUMENT_ID_SEQ_TRG
-            BEFORE INSERT ON DOCUMENT
-            FOR EACH ROW
-            WHEN (new.ID IS NULL)
-            BEGIN
-            SELECT DOCUMENT_ID_SEQ.NEXTVAL
-            INTO :new.id
-            FROM dual;
-            END;
-            /
-        </sql>
     </changeSet>
 </databaseChangeLog>
