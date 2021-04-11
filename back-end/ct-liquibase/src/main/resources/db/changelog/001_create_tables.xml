@@ -69,4 +69,5 @@
 
         <createSequence sequenceName="document_id_seq" minValue="1" startValue="1" incrementBy="1" />
     </changeSet>
+
 </databaseChangeLog>

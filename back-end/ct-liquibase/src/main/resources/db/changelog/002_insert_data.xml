@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <property name="current_date" value="now()" dbms="postgresql"/>
+
+    <changeSet id="insert author" author="Nhut.Nguyen" >
+        <insert tableName="authority">
+            <column name="id" value="1"/>
+            <column name="name" value="ROLE_GUESS"/>
+            <column name="timestamp_created" valueDate="${current_date}"/>
+            <column name="timestamp_modified" valueDate="${current_date}"/>
+        </insert>
+        <insert tableName="authority">
+            <column name="id" value="2"/>
+            <column name="name" value="ROLE_STUDENT"/>
+            <column name="timestamp_created" valueDate="${current_date}"/>
+            <column name="timestamp_modified" valueDate="${current_date}"/>
+        </insert>
+        <insert tableName="authority">
+            <column name="id" value="3"/>
+            <column name="name" value="ROLE_TEACHER"/>
+            <column name="timestamp_created" valueDate="${current_date}"/>
+            <column name="timestamp_modified" valueDate="${current_date}"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert users" author="Nhut.Nguyen" >
+        <insert tableName="users">
+            <column name="id" value="1"/>
+            <column name="email" value="guess@gmail.com"/>
+            <column name="password" value="$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra"/>
+            <column name="description" value="The user as a guess"/>
+            <column name="timestamp_created" valueDate="${current_date}"/>
+            <column name="timestamp_modified" valueDate="${current_date}"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" value="2"/>
+            <column name="email" value="student@gmail.com"/>
+            <column name="password" value="$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra"/>
+            <column name="description" value="The user as a student"/>
+            <column name="timestamp_created" valueDate="${current_date}"/>
+            <column name="timestamp_modified" valueDate="${current_date}"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" value="3"/>
+            <column name="email" value="teacher@gmail.com"/>
+            <column name="password" value="$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra"/>
+            <column name="description" value="The user as a teacher"/>
+            <column name="timestamp_created" valueDate="${current_date}"/>
+            <column name="timestamp_modified" valueDate="${current_date}"/>
+        </insert>
+    </changeSet>
+
+    <changeSet id="insert authority_role" author="Nhut.Nguyen" >
+        <insert tableName="authority_role">
+            <column name="id" value="1"/>
+            <column name="user_id" value="1"/>
+            <column name="authority_id" value="1"/>
+        </insert>
+        <insert tableName="authority_role">
+            <column name="id" value="2"/>
+            <column name="user_id" value="2"/>
+            <column name="authority_id" value="2"/>
+        </insert>
+        <insert tableName="authority_role">
+            <column name="id" value="3"/>
+            <column name="user_id" value="3"/>
+            <column name="authority_id" value="3"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
