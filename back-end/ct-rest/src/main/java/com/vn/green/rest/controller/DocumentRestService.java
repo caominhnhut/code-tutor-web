@@ -24,6 +24,7 @@ import com.vn.green.document.DocumentService;
 import com.vn.green.persistent.entity.DocumentEntity;
 
 @Controller
+@RequestMapping("document")
 public class DocumentRestService
 {
     private static final Logger logger = LoggerFactory.getLogger(DocumentRestService.class);
@@ -31,14 +32,14 @@ public class DocumentRestService
     @Autowired
     private DocumentService documentService;
 
-    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ResponseEntity<DocumentEntity> uploadFile(@RequestParam("file") MultipartFile file)
     {
         DocumentEntity documentEntity = documentService.store(file);
         return new ResponseEntity<>(documentEntity, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/uploadMultipleFiles", method = RequestMethod.POST)
+    @RequestMapping(value = "/upload-files", method = RequestMethod.POST)
     public ResponseEntity<List<DocumentEntity>> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files)
     {
         List<DocumentEntity> fileEntities = Arrays.asList(files).stream().map(file -> documentService.store(file)).collect(Collectors.toList());
@@ -46,7 +47,7 @@ public class DocumentRestService
         return new ResponseEntity<>(fileEntities, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/downloadFile/{fileId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/download/{file-id}", method = RequestMethod.GET)
     public ResponseEntity<Resource> downloadFile(@PathVariable Long id)
     {
         DocumentEntity documentEntity = documentService.findById(id);
