@@ -28,7 +28,7 @@ public class AuthenticationRestService
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticationRequest) throws Exception
 	{
-		Authentication authentication = null;
+		Authentication authentication;
 		try
 		{
 			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));

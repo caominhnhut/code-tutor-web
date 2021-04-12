@@ -86,6 +86,36 @@
 
     <build>
         <finalName>${artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>authentication-definition</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/api/2021/1/authentication-api-2021.1.0.yaml</inputSpec>
+                            <generatorName>jaxrs-spec</generatorName>
+                            <apiPackage>com.vn.green.authentication.models</apiPackage>
+                            <modelPackage>com.vn.green.authentication.models</modelPackage>
+                            <generateApiDocumentation>false</generateApiDocumentation>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <generateModels>true</generateModels>
+                            <generateApis>false</generateApis>
+                            <configOptions>
+                                <interfaceOnly>true</interfaceOnly>
+                                <useSwaggerAnnotations>false</useSwaggerAnnotations>
+                                <java8>true</java8>
+                                <sourceFolder>api</sourceFolder>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
 </project>

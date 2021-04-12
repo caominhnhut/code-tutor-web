@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vn.green.core.dto.RegisteredUser;
-import com.vn.green.core.user.model.User;
 import com.vn.green.core.user.UserService;
+import com.vn.green.core.user.model.User;
 
 @Controller
 @RequestMapping(value = "/user/")
@@ -25,7 +25,7 @@ public class UserRestService
 	@Autowired
 	private UserService userService;
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_GUESS')")
 	@RequestMapping(value = "all", method = RequestMethod.GET)
 	@ResponseBody
 	public List<User> findUser()
