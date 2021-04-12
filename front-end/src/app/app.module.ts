@@ -18,6 +18,11 @@ import { SharingComponent } from './component/sharing/sharing.component';
 import { RecruitmentComponent } from './component/recruitment/recruitment.component';
 import { DocumentComponent } from './component/document/document.component';
 import { YourPageComponent } from './component/your-page/your-page.component';
+import { UserProfileComponent } from './component/your-page/user-profile/user-profile.component';
+import { UserExerciseComponent } from './component/your-page/user-exercise/user-exercise.component';
+import { UserBookmarkComponent } from './component/your-page/user-bookmark/user-bookmark.component';
+import { UserNotificationComponent } from './component/your-page/user-notification/user-notification.component';
+import { UserChangePasswordComponent } from './component/your-page/user-change-password/user-change-password.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +37,12 @@ import { YourPageComponent } from './component/your-page/your-page.component';
     SharingComponent,
     RecruitmentComponent,
     DocumentComponent,
-    YourPageComponent
+    YourPageComponent,
+    UserProfileComponent,
+    UserExerciseComponent,
+    UserBookmarkComponent,
+    UserNotificationComponent,
+    UserChangePasswordComponent
   ],
   imports: [
     BrowserModule,

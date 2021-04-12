@@ -8,6 +8,11 @@ import { LessionDetailComponent } from './component/lession/lession-detail/lessi
 import { LessionComponent } from './component/lession/lession.component';
 import { RecruitmentComponent } from './component/recruitment/recruitment.component';
 import { SharingComponent } from './component/sharing/sharing.component';
+import { UserBookmarkComponent } from './component/your-page/user-bookmark/user-bookmark.component';
+import { UserChangePasswordComponent } from './component/your-page/user-change-password/user-change-password.component';
+import { UserExerciseComponent } from './component/your-page/user-exercise/user-exercise.component';
+import { UserNotificationComponent } from './component/your-page/user-notification/user-notification.component';
+import { UserProfileComponent } from './component/your-page/user-profile/user-profile.component';
 import { YourPageComponent } from './component/your-page/your-page.component';
 
 const routes: Routes = [
@@ -19,7 +24,32 @@ const routes: Routes = [
   { path: 'sharing', component: SharingComponent },
   { path: 'recruitment', component: RecruitmentComponent },
   { path: 'document', component: DocumentComponent },
-  { path: 'your-page', component: YourPageComponent },
+  { 
+    path: 'your-page', 
+    component: YourPageComponent,
+    children: [
+      {
+        path: 'user-profile',
+        component: UserProfileComponent,
+      },
+      {
+        path: 'change-password',
+        component: UserChangePasswordComponent,
+      },
+      {
+        path: 'exercise',
+        component: UserExerciseComponent,
+      },
+      {
+        path: 'bookmark',
+        component: UserBookmarkComponent,
+      },
+      {
+        path: 'notification',
+        component: UserNotificationComponent,
+      }
+    ]
+  },
   { path: '', redirectTo: '/home', pathMatch: 'full'},
 ];
 

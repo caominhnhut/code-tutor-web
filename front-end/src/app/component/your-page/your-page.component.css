@@ -1,15 +1,14 @@
 .your-page .navigation {
-    padding: 30px;
+    padding: 30px 0px 30px 0px;
+    margin-left: 30px;
 }
 
 .your-page .navigation .nav {
-    padding-top: 30px;
     margin-bottom: 5px;
     box-shadow: 4px 3px 24px rgb(223 227 234 / 74%);
     border-radius: 10px;
     position: relative;
     padding: 20px;
-    width: 70%;
 }
 
 .your-page .navigation .nav a {
@@ -28,4 +27,12 @@
 .sidenav {
     width: 200px;
     background: rgb(15, 62, 9);
+}
+
+.your-page .tab-pane {
+    padding: 30px;
+    box-shadow: 4px 3px 24px rgb(223 227 234 / 74%);
+    border-radius: 10px;
+    margin-top: 30px;
+    margin-bottom: 100px;
 }

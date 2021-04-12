@@ -33,39 +33,3 @@ h3 {
     color: white;
     opacity: 50%;
 }
-
-.contact-me {
-    background-color: #20ad96;
-    height: 350px;
-    margin-bottom: 90px;
-}
-
-.contact-me .description {
-    color: white;
-    padding: 30px;
-}
-
-.contact-me .description-1 {
-    color: white;
-    font-size: 50px;
-}
-
-.contact-me .description-2 {
-    color: #66FFCC;
-    font-size: 50px;
-}
-
-.contact-me input {
-    width: 65%;
-    height: 45px;
-    border: none;
-    border-radius: 25px;
-    padding-left: 30px;
-    outline: none;
-    color: gray;
-    margin: 15px;
-}
-
-.contact-me button {
-    margin-left: 2%;
-}
