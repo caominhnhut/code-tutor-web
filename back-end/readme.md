@@ -4,7 +4,7 @@
 - Install the docker to the machine
 - Go to code-tutor-web/document/compose-postgres-master to start the PostgresSQL database
 ```bash
-docker compose up -d
+docker-compose up -d
 ```
 
 ## Usage

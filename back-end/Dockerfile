@@ -3,7 +3,6 @@ FROM maven:3.6.0-jdk-8-alpine as build
 RUN mkdir -p /build
 WORKDIR /build
 
-COPY ./pom.xml ./pom.xml
 COPY back-end ./back-end
 
 RUN mvn clean package -DskipTests=true
