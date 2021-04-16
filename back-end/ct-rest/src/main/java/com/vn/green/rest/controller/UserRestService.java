@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.vn.green.core.dto.RegisteredUser;
-import com.vn.green.core.user.UserService;
-import com.vn.green.core.user.model.User;
+import com.vn.green.core.service.UserService;
+import com.vn.green.core.model.User;
 
 @Controller
 @RequestMapping(value = "user")

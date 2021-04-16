@@ -1,4 +1,4 @@
-package com.vn.green.core.user.service;
+package com.vn.green.core.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,13 +9,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.vn.green.core.dto.RegisteredUser;
 import com.vn.green.core.mapper.Mapper;
-import com.vn.green.core.user.UserService;
-import com.vn.green.core.user.model.User;
+import com.vn.green.core.model.User;
+import com.vn.green.core.service.UserService;
+import com.vn.green.core.validation.ValidationException;
+import com.vn.green.core.validation.ValidationRequest;
+import com.vn.green.core.validation.Validator;
 import com.vn.green.persistent.entity.Authority;
 import com.vn.green.persistent.entity.UserEntity;
 import com.vn.green.persistent.repository.UserRepository;
@@ -33,6 +37,9 @@ public class UserServiceImpl implements UserService
 	@Lazy
 	private PasswordEncoder passwordEncoder;
 
+	@Autowired
+	private List<Validator<?>> validators;
+
 	@Override
 	public List<User> findAll()
 	{
@@ -43,6 +50,18 @@ public class UserServiceImpl implements UserService
 	@Override
 	public RegisteredUser create(RegisteredUser registeredUser)
 	{
+		for (Validator validator : validators)
+		{
+			try
+			{
+				validator.validate(new ValidationRequest());
+			}
+			catch (ValidationException e)
+			{
+				throw new UsernameNotFoundException(e.getMessage());
+			}
+		}
+
 		UserEntity user = Mapper.from(registeredUser);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 

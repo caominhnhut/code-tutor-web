@@ -1,4 +1,4 @@
-package com.vn.green.core.user.model;
+package com.vn.green.core.model;
 
 public class User
 {

@@ -9,12 +9,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.vn.green.authentication.models.Credential;
 import com.vn.green.persistent.entity.UserEntity;
 import com.vn.green.rest.factory.jwt.TokenHelper;
-import com.vn.green.rest.model.AuthenticationRequest;
-import com.vn.green.rest.model.AuthenticationResponse;
 
 @Controller
 public class AuthenticationRestService
@@ -26,25 +24,19 @@ public class AuthenticationRestService
 	private TokenHelper tokenHelper;
 
 	@PostMapping(value = "/authenticate")
-	public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest authenticationRequest) throws Exception
+	public ResponseEntity<com.vn.green.authentication.models.Authentication> authenticate(@RequestBody Credential credential)
 	{
-		Authentication authentication;
-		try
-		{
-			authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
-		}
-		catch (Exception e)
-		{
-			throw new Exception("Authentication failed: ", e);
-		}
+		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(credential.getUsername(), credential.getPassword()));
 
-		// Inject into security context
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		UserEntity user = (UserEntity) authentication.getPrincipal();
 
 		final String token = tokenHelper.generateToken(user.getUsername());
 
-		return ResponseEntity.ok(new AuthenticationResponse(token, tokenHelper.getExpiresIn()));
+		com.vn.green.authentication.models.Authentication response = new com.vn.green.authentication.models.Authentication();
+		response.setToken(token);
+		response.setExpiredIn(tokenHelper.getExpiresIn());
+		return ResponseEntity.ok(response);
 	}
 }

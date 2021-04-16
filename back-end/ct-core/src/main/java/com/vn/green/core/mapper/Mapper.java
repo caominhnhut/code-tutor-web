@@ -4,7 +4,7 @@ import java.util.function.Function;
 
 import com.vn.green.common.enums.AuthorityName;
 import com.vn.green.core.dto.RegisteredUser;
-import com.vn.green.core.user.model.User;
+import com.vn.green.core.model.User;
 import com.vn.green.persistent.entity.Authority;
 import com.vn.green.persistent.entity.UserEntity;
 
