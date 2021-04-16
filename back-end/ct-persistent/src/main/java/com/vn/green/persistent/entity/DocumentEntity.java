@@ -10,11 +10,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "document")
-@SequenceGenerator(name = "document_id_seq")
+@SequenceGenerator(name = "document_id_generator", sequenceName = "document_id_seq", allocationSize = 1)
 public class DocumentEntity extends BaseTimestampEntity
 {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "document_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "document_id_generator")
 	private Long id;
 
 	@Column(name = "file_name", unique = true)

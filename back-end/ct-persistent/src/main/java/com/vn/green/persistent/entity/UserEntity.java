@@ -22,11 +22,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "users")
-@SequenceGenerator(name = "users_id_seq")
+@SequenceGenerator(name = "users_id_generator", sequenceName = "users_id_seq", allocationSize = 1)
 public class UserEntity extends BaseTimestampEntity implements UserDetails
 {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_generator")
 	private Long id;
 
 	@Column(name = "email", unique = true)

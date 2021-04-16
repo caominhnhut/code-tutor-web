@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  back-end:
+    container_name: code-tutor-rest
+    build:
+      context: .
+      dockerfile: dev.Dockerfile

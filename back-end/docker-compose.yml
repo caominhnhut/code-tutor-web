@@ -1,12 +1,32 @@
-version: '2'
+version: '3'
+
 services:
   back-end:
-    container_name: code-tutor-back-end
+    container_name: code-tutor-rest
     build:
       context: .
       dockerfile: Dockerfile
     restart: always
+    depends_on:
+      - postgres-db
     ports:
       - 8080:8080
       - 9960:9990
       - 8787:8787
+
+  postgres-db:
+    image: postgres:9.6.10
+    container_name: postgres_container
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-code-tutor}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-root}
+      PGDATA: /data/postgres
+    volumes:
+      - postgres-volume:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: always
+
+volumes:
+  postgres-volume:

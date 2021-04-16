@@ -16,11 +16,11 @@ import com.vn.green.common.enums.AuthorityName;
 
 @Entity
 @Table(name = "authority")
-@SequenceGenerator(name = "authority_id_seq")
+@SequenceGenerator(name = "authority_id_generator", sequenceName = "authority_id_seq", allocationSize = 1)
 public class Authority extends BaseTimestampEntity implements GrantedAuthority
 {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authority_id_seq")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authority_id_generator")
 	private Long id;
 
 	@Enumerated(EnumType.STRING)
