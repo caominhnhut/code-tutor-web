@@ -13,6 +13,4 @@ WORKDIR /build
 
 COPY --from=build /build/ct-rest/target/ct-rest.jar ./ct-rest.jar
 
-EXPOSE 8080
-
-ENTRYPOINT ["java", "-jar", "/build/ct-rest.jar"]
+#ENTRYPOINT ["java", "-jar", "/build/ct-rest.jar"]

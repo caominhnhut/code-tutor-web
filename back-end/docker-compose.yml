@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  back-end:
+  back-end-app:
     container_name: code-tutor-rest
     build:
       context: .
@@ -11,16 +11,15 @@ services:
       - postgres-db
     ports:
       - 8080:8080
-      - 9960:9990
       - 8787:8787
 
   postgres-db:
     image: postgres:9.6.10
     container_name: postgres_container
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-code-tutor}
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-root}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       PGDATA: /data/postgres
     volumes:
       - postgres-volume:/data/postgres

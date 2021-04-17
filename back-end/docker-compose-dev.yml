@@ -1,8 +1,12 @@
 version: '3'
 
 services:
-  back-end:
+  back-end-app:
     container_name: code-tutor-rest
     build:
       context: .
       dockerfile: dev.Dockerfile
+    command: java -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8787 -Djava.security.egd=file:/dev/./urandom -jar /build/ct-rest.jar
+    ports:
+      - 8080:8080
+      - 8787:8787
