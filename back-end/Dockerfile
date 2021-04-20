@@ -13,4 +13,5 @@ WORKDIR /build
 
 COPY --from=build /build/ct-rest/target/ct-rest.jar ./ct-rest.jar
 
-#ENTRYPOINT ["java", "-jar", "/build/ct-rest.jar"]
+# This line should be commented when debuging
+ENTRYPOINT ["java", "-jar", "/build/ct-rest.jar"]
