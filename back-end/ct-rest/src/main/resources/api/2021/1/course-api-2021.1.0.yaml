@@ -1,0 +1,132 @@
+openapi: "3.0.2"
+info:
+  title: Course API
+  description: This service exposes the api of course.
+  version: '2021.1.0'
+  x-api-id: api-v0001
+  x-audience: code-tutor-internal
+servers:
+  - url: '{server}'
+paths:
+  /course:
+    post:
+      summary: Create a course
+      description: The api is used for creating a new course.
+      operationId: createCourse
+      tags:
+        - Course
+      requestBody:
+        $ref: '#/components/requestBodies/Course'
+      responses:
+        '200':
+          $ref: '#/components/responses/CourseId'
+        '400':
+          $ref: '#/components/responses/Problem'
+        '401':
+          $ref: '#/components/responses/Problem'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+        '501':
+          $ref: '#/components/responses/Problem'
+        default:
+          $ref: '#/components/responses/Problem'
+
+components:
+
+  headers:
+    X-Supported-Versions:
+      description: A comma separated list of API versions supported by this resource method, referencing the "api-version" in the Content-Type.
+      schema:
+        type: string
+      example: '2020.1.0'
+
+  requestBodies:
+
+    Course:
+      description: An object containing the details of a course.
+      required: true
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/Course'
+
+  responses:
+
+    CourseId:
+      description: OK
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/CourseId'
+
+    Problem:
+      description: A generic problem response.
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/Problem'
+
+  schemas:
+    Problem:
+      description: A generic problem response describing a client or server problem.
+      required:
+        - title
+        - status
+        - detail
+      properties:
+        title:
+          description: A summary of the problem.
+          type: string
+          example: Service Unavailable
+        status:
+          description: The HTTP status code.
+          type: integer
+          format: int32
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 503
+        detail:
+          description: A detail of problem.
+          type: string
+          example: Connection time out
+
+    Course:
+      description: An object which contains details about a course.
+      required:
+        - name
+        - description
+      properties:
+        name:
+          description: The name of a course.
+          example: 'java'
+          type: string
+          maxLength: 255
+        icon:
+          description: The icon that presents for a course.
+          type: string
+          format: binary
+        orderId:
+          description: This specifies the priority for ordering.
+          example: 1
+          type: integer
+          format: int32
+        description:
+          description: The description of a course.
+          example: 'This helps you get better Java'
+          type: string
+
+    CourseId:
+      description: The identification of a course.
+      required:
+        - id
+      properties:
+        id:
+          description: The value of identification.
+          example: 123
+          type: integer
+          format: int32
