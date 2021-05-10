@@ -1,4 +1,6 @@
 # Back-End Code Tutor
+## Edit Data Model
+https://plantuml.com/class-diagram
 
 ## Installation
 - Install the docker to the machine

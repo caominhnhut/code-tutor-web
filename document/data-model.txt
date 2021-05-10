@@ -1,0 +1,69 @@
+@startuml
+class Course {
+ Long id
+ String name
+ String iconUrl
+ String description
+ int orderId
+ Status status
+ String createdBy
+ DateTime createdDate
+ DateTime updatedDate
+}
+
+class Lesson {
+ Long id
+ String name
+ String content
+ int numberOfLike
+ String createdBy
+ DateTime createdDate
+ DateTime updatedDate
+}
+
+class Comment{
+ Long id
+ String content
+ User createdBy
+ DateTime createdDate
+ DateTime updatedDate
+}
+
+class Comment{
+ Long id
+ String content
+ User createdBy
+ DateTime createdDate
+ DateTime updatedDate
+}
+
+class User{
+ Long id
+ String email
+ String password
+ String description
+ DateTime createdDate
+ DateTime updatedDate
+}
+
+enum Status {
+ CREATED
+ PROCESSING
+ ACTIVATED
+ IN_ACTIVATED
+}
+
+enum UserType {
+ VISITOR
+ STUDENT
+ TUTOR
+}
+
+Course --right{"1" Lesson
+Course ---right Status
+Lesson --{"0" Comment
+Lesson }--right User
+Comment }--right User
+Comment -- Status
+User -- UserType
+@enduml
