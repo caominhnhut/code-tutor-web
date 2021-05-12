@@ -7,51 +7,51 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.transaction.annotation.Transactional;
 
-public abstract class AbstractGenericDao<T> implements GenericDao<T>
-{
-	@PersistenceContext
-	protected EntityManager em;
+public abstract class AbstractGenericDao<T> implements GenericDao<T> {
 
-	private Class<T> clazz;
+    @PersistenceContext
+    protected EntityManager em;
 
-	public void setClazz(Class<T> clazz)
-	{
-		this.clazz = clazz;
-	}
+    private Class<T> clazz;
 
-	public T findOne(long id)
-	{
-		return em.find(clazz, id);
-	}
+    public void setClazz(Class<T> clazz) {
 
-	public List<T> findAll()
-	{
-		return em.createQuery("from " + clazz.getName()).getResultList();
-	}
+        this.clazz = clazz;
+    }
 
-	@Transactional
-	public T create(T entity)
-	{
-		em.persist(entity);
-		return entity;
-	}
+    public T findOne(long id) {
 
-	@Transactional
-	public T update(T entity)
-	{
-		return (T) em.merge(entity);
-	}
+        return em.find(clazz, id);
+    }
 
-	@Transactional
-	public void delete(T entity)
-	{
-		em.remove(entity);
-	}
+    public List<T> findAll() {
 
-	@Transactional
-	public void deleteById(long entityId)
-	{
-		T entity = findOne(entityId);
-		delete(entity);
-	}
+        return em.createQuery("from " + clazz.getName()).getResultList();
+    }
+
+    @Transactional
+    public T create(T entity) {
+
+        em.persist(entity);
+        return entity;
+    }
+
+    @Transactional
+    public T update(T entity) {
+
+        return em.merge(entity);
+    }
+
+    @Transactional
+    public void delete(T entity) {
+
+        em.remove(entity);
+    }
+
+    @Transactional
+    public void deleteById(long entityId) {
+
+        T entity = findOne(entityId);
+        delete(entity);
+    }
 }

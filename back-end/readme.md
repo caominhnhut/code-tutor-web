@@ -16,20 +16,26 @@ docker-compose up -d
     
 * Authentication:
     - http://localhost:8080/api/authenticate
-        - Guess user:
+        - Guess:
          ```bash
              username: guess@gmail.com
              password: 123
          ```
       
-        - Student user:
+        - Student:
         ```bash
             username: student@gmail.com
             password: 123
         ```
                      
-        - Teacher user:
+        - Teacher:
         ```bash
             username: teacher@gmail.com
+            password: 123
+        ```
+      
+        - Administrator:
+        ```bash
+            username: admin@gmail.com
             password: 123
         ```

@@ -23,51 +23,59 @@ public class DocumentEntity extends BaseTimestampEntity
 	@Column(name = "file_type")
 	private String fileType;
 
-	@Column(name = "download_uri")
-	private String downloadUri;
+	@Column(name = "file_uri")
+	private String fileUri;
 
-	public DocumentEntity()
-	{
+	@Column(name = "file_size")
+	private Long fileSize;
 
-	}
+	public Long getId() {
 
-	public Long getId()
-	{
 		return id;
 	}
 
-	public void setId(Long id)
-	{
+	public void setId(Long id) {
+
 		this.id = id;
 	}
 
-	public String getFilename()
-	{
+	public String getFilename() {
+
 		return filename;
 	}
 
-	public void setFilename(String filename)
-	{
+	public void setFilename(String filename) {
+
 		this.filename = filename;
 	}
 
-	public String getFileType()
-	{
+	public String getFileType() {
+
 		return fileType;
 	}
 
-	public void setFileType(String fileType)
-	{
+	public void setFileType(String fileType) {
+
 		this.fileType = fileType;
 	}
 
-	public String getDownloadUri()
-	{
-		return downloadUri;
+	public String getFileUri() {
+
+		return fileUri;
 	}
 
-	public void setDownloadUri(String downloadUri)
-	{
-		this.downloadUri = downloadUri;
+	public void setFileUri(String fileUri) {
+
+		this.fileUri = fileUri;
+	}
+
+	public Long getFileSize() {
+
+		return fileSize;
+	}
+
+	public void setFileSize(Long fileSize) {
+
+		this.fileSize = fileSize;
 	}
 }

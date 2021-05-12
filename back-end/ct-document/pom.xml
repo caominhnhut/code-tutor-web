@@ -20,6 +20,12 @@
         </dependency>
 
         <dependency>
+            <groupId>vn.green.codetutor</groupId>
+            <artifactId>ct-validation</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>5.1.2.RELEASE</version>

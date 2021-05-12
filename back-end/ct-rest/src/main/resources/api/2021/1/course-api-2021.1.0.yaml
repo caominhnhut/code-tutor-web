@@ -8,7 +8,7 @@ info:
 servers:
   - url: '{server}'
 paths:
-  /course:
+  /courses:
     post:
       summary: Create a course
       description: The api is used for creating a new course.
@@ -18,8 +18,61 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/Course'
       responses:
-        '200':
+        '201':
           $ref: '#/components/responses/CourseId'
+        '400':
+          $ref: '#/components/responses/Problem'
+        '401':
+          $ref: '#/components/responses/Problem'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+        '501':
+          $ref: '#/components/responses/Problem'
+        default:
+          $ref: '#/components/responses/Problem'
+
+    get:
+      summary: Get a list of course
+      description: The api is used for getting a list of course.
+      operationId: getCourses
+      tags:
+        - Course
+      responses:
+        '202':
+          $ref: '#/components/responses/Courses'
+        '400':
+          $ref: '#/components/responses/Problem'
+        '401':
+          $ref: '#/components/responses/Problem'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+        '501':
+          $ref: '#/components/responses/Problem'
+        default:
+          $ref: '#/components/responses/Problem'
+
+  /courses/{course-id}:
+    put:
+      summary: Update a course
+      description: The api is used for updating a new course.
+      operationId: updateCourse
+      tags:
+        - Course
+      parameters:
+        - $ref: '#/components/parameters/CourseIdPathParam'
+      requestBody:
+        $ref: '#/components/requestBodies/Course'
+      responses:
+        '204':
+          description: The resource was updated successfully.
         '400':
           $ref: '#/components/responses/Problem'
         '401':
@@ -44,6 +97,16 @@ components:
         type: string
       example: '2020.1.0'
 
+  parameters:
+    CourseIdPathParam:
+      name: course-id
+      required: true
+      description: The id of a course.
+      example: 1
+      in: path
+      schema:
+        $ref: '#/components/schemas/CourseId'
+
   requestBodies:
 
     Course:
@@ -63,6 +126,13 @@ components:
           schema:
             $ref: '#/components/schemas/CourseId'
 
+    Courses:
+      description: OK
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/Courses'
+
     Problem:
       description: A generic problem response.
       content:
@@ -71,6 +141,7 @@ components:
             $ref: '#/components/schemas/Problem'
 
   schemas:
+
     Problem:
       description: A generic problem response describing a client or server problem.
       required:
@@ -106,19 +177,30 @@ components:
           example: 'java'
           type: string
           maxLength: 255
-        icon:
+        iconUrl:
           description: The icon that presents for a course.
           type: string
-          format: binary
+          example: 'htt://domain/java.png'
         orderId:
           description: This specifies the priority for ordering.
           example: 1
+          type: integer
+          format: int32
+        amountLesson:
+          description: The amount of lesson.
+          example: 20
           type: integer
           format: int32
         description:
           description: The description of a course.
           example: 'This helps you get better Java'
           type: string
+
+    Courses:
+      description: A list of courses.
+      type: array
+      items:
+        $ref: '#/components/schemas/Course'
 
     CourseId:
       description: The identification of a course.

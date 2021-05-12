@@ -1,4 +1,4 @@
-package com.vn.green.rest.factory.jwt;
+package com.vn.green.rest.factory.token;
 
 import java.util.Date;
 import java.util.function.Function;

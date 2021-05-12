@@ -23,6 +23,12 @@
             <column name="timestamp_created" valueDate="${current_date}"/>
             <column name="timestamp_modified" valueDate="${current_date}"/>
         </insert>
+        <insert tableName="authority">
+            <column name="id" value="4"/>
+            <column name="name" value="ROLE_ADMIN"/>
+            <column name="timestamp_created" valueDate="${current_date}"/>
+            <column name="timestamp_modified" valueDate="${current_date}"/>
+        </insert>
     </changeSet>
 
     <changeSet id="insert users" author="Nhut.Nguyen" >
@@ -50,6 +56,14 @@
             <column name="timestamp_created" valueDate="${current_date}"/>
             <column name="timestamp_modified" valueDate="${current_date}"/>
         </insert>
+        <insert tableName="users">
+            <column name="id" value="4"/>
+            <column name="email" value="admin@gmail.com"/>
+            <column name="password" value="$2a$04$Vbug2lwwJGrvUXTj6z7ff.97IzVBkrJ1XfApfGNl.Z695zqcnPYra"/>
+            <column name="description" value="The user as a administrator"/>
+            <column name="timestamp_created" valueDate="${current_date}"/>
+            <column name="timestamp_modified" valueDate="${current_date}"/>
+        </insert>
     </changeSet>
 
     <changeSet id="insert authority_role" author="Nhut.Nguyen" >
@@ -67,6 +81,11 @@
             <column name="id" value="3"/>
             <column name="user_id" value="3"/>
             <column name="authority_id" value="3"/>
+        </insert>
+        <insert tableName="authority_role">
+            <column name="id" value="4"/>
+            <column name="user_id" value="4"/>
+            <column name="authority_id" value="4"/>
         </insert>
     </changeSet>
 

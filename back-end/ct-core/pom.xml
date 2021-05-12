@@ -12,11 +12,25 @@
     <packaging>jar</packaging>
 
     <dependencies>
+
         <dependency>
             <groupId>vn.green.codetutor</groupId>
             <artifactId>ct-persistent</artifactId>
             <version>${parent.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>vn.green.codetutor</groupId>
+            <artifactId>ct-validation</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>vn.green.codetutor</groupId>
+            <artifactId>ct-document</artifactId>
+            <version>${parent.version}</version>
+        </dependency>
+
     </dependencies>
 
 </project>

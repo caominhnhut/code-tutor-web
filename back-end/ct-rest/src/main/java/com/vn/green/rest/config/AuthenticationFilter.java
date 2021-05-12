@@ -2,7 +2,6 @@ package com.vn.green.rest.config;
 
 import java.io.IOException;
 
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.vn.green.rest.factory.jwt.TokenHelper;
+import com.vn.green.rest.factory.token.TokenHelper;
 
 import io.jsonwebtoken.ExpiredJwtException;
 

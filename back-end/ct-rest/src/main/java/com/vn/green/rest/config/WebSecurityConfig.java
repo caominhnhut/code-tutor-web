@@ -16,7 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.vn.green.rest.factory.jwt.TokenHelper;
+import com.vn.green.rest.factory.token.TokenHelper;
 import com.vn.green.core.service.impl.UserDetailService;
 
 @Configuration

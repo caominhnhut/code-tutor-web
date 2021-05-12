@@ -58,7 +58,8 @@
             </column>
             <column name="file_name" type="java.sql.Types.VARCHAR(128)" />
             <column name="file_type" type="java.sql.Types.VARCHAR(128)" />
-            <column name="download_uri" type="java.sql.Types.VARCHAR(128)" />
+            <column name="file_uri" type="java.sql.Types.VARCHAR(128)" />
+            <column name="file_size" type="BIGINT" />
             <column name="timestamp_created" type="DATETIME">
                 <constraints nullable="false" />
             </column>
@@ -68,6 +69,28 @@
         </createTable>
 
         <createSequence sequenceName="document_id_seq" minValue="1" startValue="1" incrementBy="1" />
+    </changeSet>
+
+    <changeSet id="course table" author="Nhut.Nguyen">
+        <createTable tableName="course">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="PK_course" />
+            </column>
+            <column name="name" type="java.sql.Types.VARCHAR(128)" />
+            <column name="description" type="java.sql.Types.VARCHAR(128)" />
+            <column name="icon_uri" type="java.sql.Types.VARCHAR(128)" />
+            <column name="created_by" type="java.sql.Types.VARCHAR(128)" />
+            <column name="status" type="java.sql.Types.VARCHAR(128)" />
+            <column name="order_id" type="BIGINT" />
+            <column name="timestamp_created" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+            <column name="timestamp_modified" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="course_id_seq" minValue="1" startValue="1" incrementBy="1" />
     </changeSet>
 
 </databaseChangeLog>

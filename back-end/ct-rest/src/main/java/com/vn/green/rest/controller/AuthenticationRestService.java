@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.vn.green.authentication.models.Credential;
 import com.vn.green.persistent.entity.UserEntity;
-import com.vn.green.rest.factory.jwt.TokenHelper;
+import com.vn.green.rest.factory.token.TokenHelper;
 
 @Controller
 public class AuthenticationRestService
