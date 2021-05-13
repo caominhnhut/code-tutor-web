@@ -1,5 +1,7 @@
 package com.vn.green.common.dto;
 
+import com.vn.green.common.enums.Status;
+
 public class CourseDTO {
 
     private Long id;
@@ -8,11 +10,15 @@ public class CourseDTO {
 
     private String description;
 
-    private byte[] icon;
+    private String iconUri;
+
+    private String createdBy;
 
     private int orderId;
 
     private int amountLesson;
+
+    private Status status;
 
     public Long getId() {
 
@@ -44,14 +50,24 @@ public class CourseDTO {
         this.description = description;
     }
 
-    public byte[] getIcon() {
+    public String getIconUri() {
 
-        return icon;
+        return iconUri;
     }
 
-    public void setIcon(byte[] icon) {
+    public void setIconUri(String iconUri) {
 
-        this.icon = icon;
+        this.iconUri = iconUri;
+    }
+
+    public String getCreatedBy() {
+
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+
+        this.createdBy = createdBy;
     }
 
     public int getOrderId() {
@@ -72,5 +88,15 @@ public class CourseDTO {
     public void setAmountLesson(int amountLesson) {
 
         this.amountLesson = amountLesson;
+    }
+
+    public Status getStatus() {
+
+        return status;
+    }
+
+    public void setStatus(Status status) {
+
+        this.status = status;
     }
 }

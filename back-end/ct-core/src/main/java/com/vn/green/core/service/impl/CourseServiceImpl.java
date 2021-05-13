@@ -1,11 +1,15 @@
 package com.vn.green.core.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.common.base.Strings;
 import com.vn.green.common.dto.CourseDTO;
 import com.vn.green.common.enums.Status;
 import com.vn.green.core.mapper.CourseMapper;
@@ -21,6 +25,8 @@ import com.vn.green.validation.Validator;
 
 @Service
 public class CourseServiceImpl implements CourseService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CourseServiceImpl.class);
 
     @Autowired
     private List<Validator<?>> validators;
@@ -53,6 +59,51 @@ public class CourseServiceImpl implements CourseService {
         return courseRepository.create(courseEntity).getId();
     }
 
+    @Override
+    public boolean updateCourse(CourseDTO courseDTO, MultipartFile file) throws ValidationException {
+
+        executeValidation(courseDTO);
+
+        CourseEntity courseEntity = courseRepository.findOne(courseDTO.getId());
+
+        courseEntity.setStatus(courseDTO.getStatus());
+        courseEntity.setName(courseDTO.getName());
+        courseEntity.setDescription(courseDTO.getDescription());
+        courseEntity.setOrderId(courseDTO.getOrderId());
+
+        if (file == null) {
+            // Don't need to update the icon
+            courseRepository.update(courseEntity);
+            return true;
+        }
+
+        if (Strings.isNullOrEmpty(courseEntity.getIconUri())) {
+            // If the current course dose not have icon, then create a new one
+            DocumentEntity documentEntity = documentService.storeImage(file);
+            courseEntity.setIconUri(documentEntity.getFileUri());
+        } else {
+            // replace the existing icon in disk
+            String filename = extractFilename(courseEntity.getIconUri());
+            boolean updatedResult = documentService.updateImage(file, filename);
+
+            if (!updatedResult) {
+                LOGGER.error("Error while updating icon");
+                return false;
+            }
+        }
+
+        courseRepository.update(courseEntity);
+        return true;
+    }
+
+    @Override
+    public List<CourseDTO> getCourses() {
+
+        List<CourseEntity> courseEntities = courseRepository.findAll();
+
+        return courseEntities.stream().map(CourseMapper.INSTANCE::mapFromEntity).collect(Collectors.toList());
+    }
+
     private void executeValidation(CourseDTO courseDTO) throws ValidationException {
 
         for (Validator validator : validators) {
@@ -60,5 +111,11 @@ public class CourseServiceImpl implements CourseService {
                 validator.validate(courseDTO);
             }
         }
+    }
+
+    private String extractFilename(String fileUri) {
+
+        int index = fileUri.indexOf('=') + 1;
+        return fileUri.substring(index);
     }
 }

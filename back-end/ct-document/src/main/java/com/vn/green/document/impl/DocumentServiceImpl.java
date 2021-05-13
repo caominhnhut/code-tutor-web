@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.vn.green.document.DocumentService;
 import com.vn.green.document.exception.FileStorageException;
@@ -52,13 +51,9 @@ public class DocumentServiceImpl implements DocumentService {
         documentEntity.setFileType(file.getContentType());
         documentEntity.setFileSize(file.getSize());
 
-        try (InputStream inputStream = file.getInputStream()) {
-            Files.copy(inputStream, Paths.get(String.format("%s\\%s", photoPath, uniqueFilename)), StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            throw new FileStorageException(String.format("Error while saving image: [%s]", e.getMessage()));
-        }
+        storeFileToDirectory(file, uniqueFilename);
 
-        String fileUri = ServletUriComponentsBuilder.fromCurrentContextPath().path(downloadUrl).path(uniqueFilename).toUriString();
+        String fileUri = downloadUrl.concat(uniqueFilename);
         fileUri = fileUri.replace("%3F", "?");
         documentEntity.setFileUri(fileUri);
 
@@ -66,7 +61,18 @@ public class DocumentServiceImpl implements DocumentService {
     }
 
     @Override
+    public boolean updateImage(MultipartFile file, String filename) throws ValidationException {
+
+        executeValidation(file);
+
+        storeFileToDirectory(file, filename);
+
+        return true;
+    }
+
+    @Override
     public byte[] loadFileByName(String filename) throws IOException {
+
         return Files.readAllBytes(Paths.get(String.format("%s\\%s", photoPath, filename)));
     }
 
@@ -84,5 +90,14 @@ public class DocumentServiceImpl implements DocumentService {
         Long timeInMillis = Calendar.getInstance().getTimeInMillis();
 
         return String.format("%s_%s", timeInMillis, filename);
+    }
+
+    private void storeFileToDirectory(MultipartFile file, String filename) {
+
+        try (InputStream inputStream = file.getInputStream()) {
+            Files.copy(inputStream, Paths.get(String.format("%s\\%s", photoPath, filename)), StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new FileStorageException(String.format("Error while saving image: [%s]", e.getMessage()));
+        }
     }
 }

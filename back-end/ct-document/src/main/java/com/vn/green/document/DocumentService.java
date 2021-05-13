@@ -11,5 +11,7 @@ public interface DocumentService
 {
     DocumentEntity storeImage(MultipartFile file) throws ValidationException;
 
+    boolean updateImage(MultipartFile file, String filename) throws ValidationException;
+
     byte[] loadFileByName(String filename) throws IOException;
 }

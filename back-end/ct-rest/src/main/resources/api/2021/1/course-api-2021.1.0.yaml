@@ -177,7 +177,7 @@ components:
           example: 'java'
           type: string
           maxLength: 255
-        iconUrl:
+        iconUri:
           description: The icon that presents for a course.
           type: string
           example: 'htt://domain/java.png'
@@ -195,6 +195,8 @@ components:
           description: The description of a course.
           example: 'This helps you get better Java'
           type: string
+        status:
+          $ref: '#/components/schemas/Status'
 
     Courses:
       description: A list of courses.
@@ -212,3 +214,12 @@ components:
           example: 123
           type: integer
           format: int32
+
+    Status:
+      description: The status of a course.
+      type: string
+      enum:
+        - CREATED
+        - PROCESSING
+        - ACTIVATED
+        - IN_ACTIVATED

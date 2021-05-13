@@ -20,8 +20,13 @@ public enum CourseMapper {
         mapperFacade = BaseMapper.MAPPER_FACTORY.getMapperFacade();
     }
 
-    public CourseDTO mapFromModel(Course course)
-    {
+    public CourseDTO mapFromModel(Course course) {
+
         return mapperFacade.map(course, CourseDTO.class);
+    }
+
+    public Course mapFromDTO(CourseDTO courseDTO) {
+
+        return mapperFacade.map(courseDTO, Course.class);
     }
 }
