@@ -4,9 +4,13 @@ https://plantuml.com/class-diagram
 
 ## Installation
 - Install the docker to the machine
-- Go to code-tutor-web/document/compose-postgres-master to start the PostgresSQL database
+- Go to code-tutor-web/back-end to start the PostgresSQL database
 ```bash
-docker-compose up -d
+docker-compose -f .\docker-compose.postgres.yml up -d
+```
+- Open CLI in Docker-Desktop to access database and see if it works with this syntax: psql -U <user-name> -W <database-name>
+```
+psql -U postgres -W code-tutor
 ```
 
 ## Usage
