@@ -62,7 +62,7 @@ paths:
   /courses/{course-id}:
     put:
       summary: Update a course
-      description: The api is used for updating a new course.
+      description: The api is used for updating a course.
       operationId: updateCourse
       tags:
         - Course
@@ -72,7 +72,119 @@ paths:
         $ref: '#/components/requestBodies/Course'
       responses:
         '204':
-          description: The resource was updated successfully.
+          description: The course was updated successfully.
+        '400':
+          $ref: '#/components/responses/Problem'
+        '401':
+          $ref: '#/components/responses/Problem'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+        '501':
+          $ref: '#/components/responses/Problem'
+        default:
+          $ref: '#/components/responses/Problem'
+
+  /courses/{course-id}/lessons:
+    post:
+      summary: Create a lesson
+      description: The api is used for creating a new lesson of a specified course.
+      operationId: createLesson
+      tags:
+        - Lesson
+      parameters:
+        - $ref: '#/components/parameters/CourseIdPathParam'
+      requestBody:
+        $ref: '#/components/requestBodies/Lesson'
+      responses:
+        '201':
+          $ref: '#/components/responses/LessonId'
+        '400':
+          $ref: '#/components/responses/Problem'
+        '401':
+          $ref: '#/components/responses/Problem'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+        '501':
+          $ref: '#/components/responses/Problem'
+        default:
+          $ref: '#/components/responses/Problem'
+
+    get:
+      summary: Get a list of lessons
+      description: The api is used for getting a list of lessons.
+      operationId: getLessons
+      tags:
+        - Lesson
+      parameters:
+        - $ref: '#/components/parameters/CourseIdPathParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/LessonMetas'
+        '400':
+          $ref: '#/components/responses/Problem'
+        '401':
+          $ref: '#/components/responses/Problem'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+        '501':
+          $ref: '#/components/responses/Problem'
+        default:
+          $ref: '#/components/responses/Problem'
+
+  /courses/{course-id}/lessons/{lesson-id}:
+    put:
+      summary: Update a lesson
+      description: The api is used for updating a lesson.
+      operationId: updateLesson
+      tags:
+        - Lesson
+      parameters:
+        - $ref: '#/components/parameters/CourseIdPathParam'
+        - $ref: '#/components/parameters/LessonIdPathParam'
+      requestBody:
+        $ref: '#/components/requestBodies/Lesson'
+      responses:
+        '204':
+          description: The lesson was updated successfully.
+        '400':
+          $ref: '#/components/responses/Problem'
+        '401':
+          $ref: '#/components/responses/Problem'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+        '501':
+          $ref: '#/components/responses/Problem'
+        default:
+          $ref: '#/components/responses/Problem'
+
+    get:
+      summary: Get a lesson
+      description: The api is used for getting a lesson.
+      operationId: getLesson
+      tags:
+        - Lesson
+      parameters:
+        - $ref: '#/components/parameters/CourseIdPathParam'
+        - $ref: '#/components/parameters/LessonIdPathParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/Lesson'
         '400':
           $ref: '#/components/responses/Problem'
         '401':
@@ -105,7 +217,16 @@ components:
       example: 1
       in: path
       schema:
-        $ref: '#/components/schemas/CourseId'
+        $ref: '#/components/schemas/Id'
+
+    LessonIdPathParam:
+      name: lesson-id
+      required: true
+      description: The id of a lesson.
+      example: 1
+      in: path
+      schema:
+        $ref: '#/components/schemas/Id'
 
   requestBodies:
 
@@ -117,6 +238,14 @@ components:
           schema:
             $ref: '#/components/schemas/Course'
 
+    Lesson:
+      description: An object containing the details of a lesson.
+      required: true
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/Lesson'
+
   responses:
 
     CourseId:
@@ -124,7 +253,7 @@ components:
       content:
         application/json;api-version=2021.1.0:
           schema:
-            $ref: '#/components/schemas/CourseId'
+            $ref: '#/components/schemas/Id'
 
     Courses:
       description: OK
@@ -132,6 +261,27 @@ components:
         application/json;api-version=2021.1.0:
           schema:
             $ref: '#/components/schemas/Courses'
+
+    LessonId:
+      description: OK
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/Id'
+
+    LessonMetas:
+      description: OK
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/LessonMetas'
+
+    Lesson:
+      description: OK
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/Lesson'
 
     Problem:
       description: A generic problem response.
@@ -204,8 +354,8 @@ components:
       items:
         $ref: '#/components/schemas/Course'
 
-    CourseId:
-      description: The identification of a course.
+    Id:
+      description: The identification of an object.
       required:
         - id
       properties:
@@ -215,11 +365,78 @@ components:
           type: integer
           format: int32
 
+    Lesson:
+      description: An object which contains details about a lesson.
+      required:
+        - title
+      properties:
+        title:
+          description: The title of a lesson.
+          example: 'Spring MVC for Beginner'
+          type: string
+          maxLength: 255
+        iconUri:
+          description: The specified uri of icon.
+          example: 'http://icon.png'
+          type: string
+        content:
+          description: The content of a lesson.
+          example: 'This helps you get better Java'
+          type: string
+        metaData:
+          $ref: '#/components/schemas/MetaData'
+        status:
+          $ref: '#/components/schemas/Status'
+
+    MetaData:
+      description: An object which contains meta data of a lesson.
+      properties:
+        amountOfLikes:
+          description: The amount of likes.
+          example: 20
+          type: number
+          format: int32
+        amountOfComments:
+          description: The amount of comments.
+          example: 20
+          type: number
+          format: int32
+        createdBy:
+          description: The user creates this lesson.
+          type: string
+          example: 'Nhut.Nguyen'
+        createdDate:
+          description: The created date-time.
+          example: '2017-07-21T17:32:28Z'
+          type: string
+          format: date-time
+        course:
+          description: The course that the lesson belongs to.
+          example: 'Java'
+          type: string
+
+    LessonMetas:
+      description: A list of metadata of lessons.
+      type: array
+      items:
+        $ref: '#/components/schemas/LessonMeta'
+
+    LessonMeta:
+      description: An object which contains meta data.
+      properties:
+        title:
+          description: The title of a lesson.
+          type: string
+          example: 'Java Spring Boot'
+        metaData:
+          $ref: '#/components/schemas/MetaData'
+
     Status:
       description: The status of a course.
       type: string
       enum:
         - CREATED
+        - UPDATED
         - PROCESSING
         - ACTIVATED
         - IN_ACTIVATED
