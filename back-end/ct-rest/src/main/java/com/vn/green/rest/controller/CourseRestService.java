@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vn.green.common.dto.CourseDTO;
+import com.vn.green.common.dto.LessonDTO;
 import com.vn.green.core.service.CourseService;
+import com.vn.green.core.service.LessonService;
 import com.vn.green.course.models.Course;
+import com.vn.green.course.models.Lesson;
 import com.vn.green.rest.factory.mapper.CourseMapper;
+import com.vn.green.rest.factory.mapper.JsonUtility;
+import com.vn.green.rest.factory.mapper.LessonMapper;
 import com.vn.green.validation.ValidationException;
 
 @RestController()
@@ -30,13 +33,16 @@ public class CourseRestService {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private LessonService lessonService;
+
     @PostMapping(value = "/courses", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity createCourse(@RequestPart("course") String courseJson, @RequestPart(value = "file", required = false) MultipartFile file) {
 
         try {
 
-            Course course = convertFromJson(courseJson);
+            Course course = JsonUtility.convertFromJson(courseJson, Course.class);
 
             CourseDTO courseDTO = CourseMapper.INSTANCE.mapFromModel(course);
 
@@ -56,7 +62,7 @@ public class CourseRestService {
 
         try {
 
-            Course course = convertFromJson(courseJson);
+            Course course = JsonUtility.convertFromJson(courseJson, Course.class);
 
             CourseDTO courseDTO = CourseMapper.INSTANCE.mapFromModel(course);
             courseDTO.setId(courseId);
@@ -81,13 +87,23 @@ public class CourseRestService {
         return new ResponseEntity(courses, HttpStatus.OK);
     }
 
-    private Course convertFromJson(String json) throws ValidationException {
+    @PostMapping(value = "/{course-id}/lesson", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity createLesson(@PathVariable("course-id") long courseId, @RequestPart("lesson") String lessonJson, @RequestPart(value = "file", required = false) MultipartFile file) {
 
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(json, Course.class);
-        } catch (JsonProcessingException e) {
-            throw new ValidationException("The data of course is incorrect format");
+
+            Lesson lesson = JsonUtility.convertFromJson(lessonJson, Lesson.class);
+
+            LessonDTO lessonDTO = LessonMapper.INSTANCE.mapFromModel(lesson);
+
+            Long lessonId = lessonService.createLesson(lessonDTO, courseId, file);
+
+            return new ResponseEntity(lessonId, HttpStatus.CREATED);
+
+        } catch (ValidationException exception) {
+
+            return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
