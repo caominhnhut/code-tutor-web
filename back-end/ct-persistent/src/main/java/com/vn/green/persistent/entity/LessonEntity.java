@@ -1,9 +1,11 @@
 package com.vn.green.persistent.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,12 +38,11 @@ public class LessonEntity extends BaseTimestampEntity {
     @Column(name = "status")
     private Status status;
 
-    @ManyToOne
-    @JoinColumn(name = "created_by", nullable = false)
-    private UserEntity createdBy;
+    @Column(name = "created_by", nullable = false)
+    private String createdBy;
 
-    @ManyToOne
-    @JoinColumn(name = "course", nullable = false)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id", nullable = false)
     private CourseEntity course;
 
     public Long getId() {
@@ -94,12 +95,12 @@ public class LessonEntity extends BaseTimestampEntity {
         this.status = status;
     }
 
-    public UserEntity getCreatedBy() {
+    public String getCreatedBy() {
 
         return createdBy;
     }
 
-    public void setCreatedBy(UserEntity createdBy) {
+    public void setCreatedBy(String createdBy) {
 
         this.createdBy = createdBy;
     }

@@ -2,6 +2,8 @@
 <databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
+    <property  name="clob.type"  value="clob"  dbms="postgresql"/>
+
     <changeSet id="authority table" author="Nhut.Nguyen">
         <createTable tableName="authority">
             <column name="id" type="BIGINT" autoIncrement="true">
@@ -91,6 +93,31 @@
         </createTable>
 
         <createSequence sequenceName="course_id_seq" minValue="1" startValue="1" incrementBy="1" />
+    </changeSet>
+
+    <changeSet id="lesson table" author="Nhut.Nguyen">
+        <createTable tableName="lesson">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="PK_lesson" />
+            </column>
+            <column name="title" type="java.sql.Types.VARCHAR(128)" />
+            <column name="icon_uri" type="java.sql.Types.VARCHAR(128)" />
+            <column name="content" type="${clob.type}" />
+            <column name="status" type="java.sql.Types.VARCHAR(128)" />
+            <column name="created_by" type="java.sql.Types.VARCHAR(128)" />
+            <column name="course_id" type="BIGINT">
+                <constraints nullable="false" />
+            </column>
+            <column name="timestamp_created" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+            <column name="timestamp_modified" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="lesson_id_seq" minValue="1" startValue="1" incrementBy="1" />
+        <addForeignKeyConstraint baseTableName="lesson" baseColumnNames="course_id" constraintName="fk_lesson_course" referencedTableName="course" referencedColumnNames="id" />
     </changeSet>
 
 </databaseChangeLog>

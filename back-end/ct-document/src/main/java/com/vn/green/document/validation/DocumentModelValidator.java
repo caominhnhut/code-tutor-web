@@ -1,8 +1,5 @@
 package com.vn.green.document.validation;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,15 +19,14 @@ public class DocumentModelValidator implements Validator<MultipartFile> {
         }
 
         String filename = StringUtils.cleanPath(data.getOriginalFilename());
-        if(filename.contains(".."))
-        {
+        if (filename.contains("..")) {
             throw new ValidationException("The filename is incorrect format");
         }
     }
 
     @Override
-    public List<SupportType> getSupportedTypes() {
+    public SupportType getSupportedType() {
 
-        return Collections.singletonList(SupportType.DOCUMENT);
+        return SupportType.DOCUMENT;
     }
 }

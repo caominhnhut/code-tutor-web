@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.common.base.Strings;
 import com.vn.green.common.dto.CourseDTO;
 import com.vn.green.common.enums.Status;
+import com.vn.green.common.utility.StringHelper;
 import com.vn.green.core.mapper.CourseMapper;
 import com.vn.green.core.service.CourseService;
 import com.vn.green.core.service.UserService;
@@ -21,7 +22,7 @@ import com.vn.green.persistent.entity.DocumentEntity;
 import com.vn.green.persistent.repository.CourseRepository;
 import com.vn.green.validation.SupportType;
 import com.vn.green.validation.ValidationException;
-import com.vn.green.validation.Validator;
+import com.vn.green.validation.ValidatorProvider;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -29,7 +30,7 @@ public class CourseServiceImpl implements CourseService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CourseServiceImpl.class);
 
     @Autowired
-    private List<Validator<?>> validators;
+    private ValidatorProvider validatorProvider;
 
     @Autowired
     private CourseRepository courseRepository;
@@ -43,7 +44,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Long createCourse(CourseDTO courseDTO, MultipartFile file) throws ValidationException {
 
-        executeValidation(courseDTO);
+        validatorProvider.executeValidation(courseDTO, SupportType.COURSE);
 
         CourseEntity courseEntity = CourseMapper.INSTANCE.mapToEntity(courseDTO);
 
@@ -62,7 +63,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public boolean updateCourse(CourseDTO courseDTO, MultipartFile file) throws ValidationException {
 
-        executeValidation(courseDTO);
+        validatorProvider.executeValidation(courseDTO, SupportType.COURSE);
 
         CourseEntity courseEntity = courseRepository.findOne(courseDTO.getId());
 
@@ -83,7 +84,7 @@ public class CourseServiceImpl implements CourseService {
             courseEntity.setIconUri(documentEntity.getFileUri());
         } else {
             // replace the existing icon in disk
-            String filename = extractFilename(courseEntity.getIconUri());
+            String filename = StringHelper.extractFilename(courseEntity.getIconUri());
             boolean updatedResult = documentService.updateImage(file, filename);
 
             if (!updatedResult) {
@@ -102,20 +103,5 @@ public class CourseServiceImpl implements CourseService {
         List<CourseEntity> courseEntities = courseRepository.findAll();
 
         return courseEntities.stream().map(CourseMapper.INSTANCE::mapFromEntity).collect(Collectors.toList());
-    }
-
-    private void executeValidation(CourseDTO courseDTO) throws ValidationException {
-
-        for (Validator validator : validators) {
-            if (validator.getSupportedTypes().contains(SupportType.COURSE)) {
-                validator.validate(courseDTO);
-            }
-        }
-    }
-
-    private String extractFilename(String fileUri) {
-
-        int index = fileUri.indexOf('=') + 1;
-        return fileUri.substring(index);
     }
 }

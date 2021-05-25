@@ -1,7 +1,4 @@
-package com.vn.green.core.validation;
-
-import java.util.Collections;
-import java.util.List;
+package com.vn.green.core.validation.validator;
 
 import org.springframework.stereotype.Service;
 
@@ -27,8 +24,8 @@ public class CourseModelValidator implements Validator<CourseDTO> {
     }
 
     @Override
-    public List<SupportType> getSupportedTypes() {
+    public SupportType getSupportedType() {
 
-        return Collections.singletonList(SupportType.COURSE);
+        return SupportType.COURSE;
     }
 }

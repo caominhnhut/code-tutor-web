@@ -87,7 +87,7 @@ public class CourseRestService {
         return new ResponseEntity(courses, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/{course-id}/lesson", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/courses/{course-id}/lessons", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity createLesson(@PathVariable("course-id") long courseId, @RequestPart("lesson") String lessonJson, @RequestPart(value = "file", required = false) MultipartFile file) {
 
@@ -100,6 +100,27 @@ public class CourseRestService {
             Long lessonId = lessonService.createLesson(lessonDTO, courseId, file);
 
             return new ResponseEntity(lessonId, HttpStatus.CREATED);
+
+        } catch (ValidationException exception) {
+
+            return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping(value = "/courses/{course-id}/lessons/{lesson-id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity updateLesson(@PathVariable("course-id") long courseId, @PathVariable("lesson-id") long lessonId, @RequestPart("lesson") String lessonJson, @RequestPart(value = "file", required = false) MultipartFile file) {
+
+        try {
+
+            Lesson lesson = JsonUtility.convertFromJson(lessonJson, Lesson.class);
+
+            LessonDTO lessonDTO = LessonMapper.INSTANCE.mapFromModel(lesson);
+            lessonDTO.setId(lessonId);
+
+            boolean updatedResult = lessonService.updateLesson(lessonDTO, courseId, file);
+
+            return new ResponseEntity(updatedResult, HttpStatus.NO_CONTENT);
 
         } catch (ValidationException exception) {
 

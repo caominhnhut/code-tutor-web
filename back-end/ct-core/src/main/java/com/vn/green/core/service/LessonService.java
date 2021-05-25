@@ -11,7 +11,7 @@ public interface LessonService {
 
     Long createLesson(LessonDTO lessonDTO, long courseId, MultipartFile file) throws ValidationException;
 
-    boolean updateLesson(LessonDTO lessonDTO, MultipartFile file) throws ValidationException;
+    boolean updateLesson(LessonDTO lessonDTO, long courseId, MultipartFile file) throws ValidationException;
 
     List<LessonDTO> getLessons();
 
