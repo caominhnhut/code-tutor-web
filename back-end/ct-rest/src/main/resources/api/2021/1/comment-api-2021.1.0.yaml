@@ -1,0 +1,294 @@
+openapi: "3.0.2"
+info:
+  title: Comment API
+  description: This service exposes the api of comment.
+  version: '2021.1.0'
+  x-api-id: api-v0001
+  x-audience: code-tutor-internal
+servers:
+  - url: '{server}'
+paths:
+  /comments:
+    post:
+      summary: Create a comment
+      description: The api is used for creating a new comment.
+      operationId: createComment
+      tags:
+        - Comment
+      parameters:
+        - $ref: '#/components/parameters/FeedIdPathParam'
+        - $ref: '#/components/parameters/CommentTypePathParam'
+      requestBody:
+        $ref: '#/components/requestBodies/Comment'
+      responses:
+        '201':
+          $ref: '#/components/responses/CommentId'
+        '400':
+          $ref: '#/components/responses/Problem'
+        '401':
+          $ref: '#/components/responses/Problem'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+        '501':
+          $ref: '#/components/responses/Problem'
+        default:
+          $ref: '#/components/responses/Problem'
+
+    get:
+      summary: Get a list of comments
+      description: The api is used for getting a list of comments.
+      operationId: getComments
+      tags:
+        - Comment
+      parameters:
+        - $ref: '#/components/parameters/FeedIdPathParam'
+        - $ref: '#/components/parameters/CommentTypePathParam'
+      responses:
+        '202':
+          $ref: '#/components/responses/Comments'
+        '400':
+          $ref: '#/components/responses/Problem'
+        '401':
+          $ref: '#/components/responses/Problem'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+        '501':
+          $ref: '#/components/responses/Problem'
+        default:
+          $ref: '#/components/responses/Problem'
+
+  /comments/{comment-id}:
+    put:
+      summary: Update a comment
+      description: The api is used for updating a comment.
+      operationId: updateComment
+      tags:
+        - Comment
+      parameters:
+        - $ref: '#/components/parameters/FeedIdPathParam'
+        - $ref: '#/components/parameters/CommentTypePathParam'
+        - $ref: '#/components/parameters/CommentIdPathParam'
+      requestBody:
+        $ref: '#/components/requestBodies/Comment'
+      responses:
+        '204':
+          description: The comment was updated successfully
+        '400':
+          $ref: '#/components/responses/Problem'
+        '401':
+          $ref: '#/components/responses/Problem'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+        '501':
+          $ref: '#/components/responses/Problem'
+        default:
+          $ref: '#/components/responses/Problem'
+
+    delete:
+      summary: Delete a comment
+      description: The api is used for deleting a comment.
+      operationId: deleteComment
+      tags:
+        - Comment
+      parameters:
+        - $ref: '#/components/parameters/FeedIdPathParam'
+        - $ref: '#/components/parameters/CommentTypePathParam'
+        - $ref: '#/components/parameters/CommentIdPathParam'
+      responses:
+        '204':
+          description: The comment was deleted successfully
+        '400':
+          $ref: '#/components/responses/Problem'
+        '401':
+          $ref: '#/components/responses/Problem'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+        '501':
+          $ref: '#/components/responses/Problem'
+        default:
+          $ref: '#/components/responses/Problem'
+
+
+components:
+
+  headers:
+    X-Supported-Versions:
+      description: A comma separated list of API versions supported by this resource method, referencing the "api-version" in the Content-Type.
+      schema:
+        type: string
+      example: '2020.1.0'
+
+  parameters:
+    FeedIdPathParam:
+      name: feedId
+      required: true
+      description: The id of a lesson or a post.
+      example: 1
+      in: query
+      schema:
+        $ref: '#/components/schemas/Id'
+
+    CommentTypePathParam:
+      name: commentType
+      required: true
+      description: This specifies the comment is for lesson or post.
+      example: 'LESSON'
+      in: query
+      schema:
+        $ref: '#/components/schemas/CommentType'
+
+    CommentIdPathParam:
+      name: comment-id
+      required: true
+      description: This identification of a comment.
+      example: 2
+      in: path
+      schema:
+        $ref: '#/components/schemas/Id'
+
+  requestBodies:
+
+    Comment:
+      description: An object containing the details of a Comment.
+      required: true
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/Comment'
+
+  responses:
+
+    Comments:
+      description: OK
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/Comments'
+
+    CommentId:
+      description: OK
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/Id'
+
+    Problem:
+      description: A generic problem response.
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/Problem'
+
+  schemas:
+
+    Problem:
+      description: A generic problem response describing a client or server problem.
+      required:
+        - title
+        - status
+        - detail
+      properties:
+        title:
+          description: A summary of the problem.
+          type: string
+          example: Service Unavailable
+        status:
+          description: The HTTP status code.
+          type: integer
+          format: int32
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 503
+        detail:
+          description: A detail of problem.
+          type: string
+          example: Connection time out
+
+    Comment:
+      description: An object which contains details about a Comment.
+      required:
+        - userName
+        - email
+        - content
+      properties:
+        id:
+          description: The identification.
+          example: 1
+          type: integer
+          format: int32
+        content:
+          description: The content of comment.
+          example: 'iron man is good'
+          type: string
+        metaData:
+          $ref: '#/components/schemas/MetaData'
+        status:
+          $ref: '#/components/schemas/Status'
+
+    Comments:
+      description: A list of comments.
+      type: array
+      items:
+        $ref: '#/components/schemas/Comment'
+
+    Id:
+      description: The identification of an object.
+      required:
+        - id
+      properties:
+        id:
+          description: The value of identification.
+          example: 123
+          type: integer
+          format: int32
+
+    MetaData:
+      description: An object which contains meta data of a comment.
+      properties:
+        userName:
+          description: The name of author.
+          example: 'iron man'
+          type: string
+          maxLength: 255
+        email:
+          description: The email of author.
+          type: string
+          example: 'iron-man@gmail.com'
+        userIconUri:
+          description: The link of icon.
+          type: string
+          example: 'http://icon'
+
+    CommentType:
+      description: This specifies the comment is for lesson or post.
+      type: string
+      enum:
+        - LESSON
+        - POST
+
+    Status:
+      description: The status of a course.
+      type: string
+      enum:
+        - CREATED
+        - UPDATED
+        - PROCESSING
+        - ACTIVATED
+        - IN_ACTIVATED

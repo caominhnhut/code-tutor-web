@@ -322,6 +322,11 @@ components:
         - name
         - description
       properties:
+        id:
+          description: The identification of a course
+          example: 1
+          type: integer
+          format: int32
         name:
           description: The name of a course.
           example: 'java'
@@ -370,6 +375,11 @@ components:
       required:
         - title
       properties:
+        id:
+          description: The identification of a lesson
+          example: 1
+          type: integer
+          format: int32
         title:
           description: The title of a lesson.
           example: 'Spring MVC for Beginner'

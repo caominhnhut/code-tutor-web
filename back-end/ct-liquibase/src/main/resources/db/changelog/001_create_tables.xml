@@ -120,4 +120,28 @@
         <addForeignKeyConstraint baseTableName="lesson" baseColumnNames="course_id" constraintName="fk_lesson_course" referencedTableName="course" referencedColumnNames="id" />
     </changeSet>
 
+    <changeSet id="comment table" author="Nhut.Nguyen">
+        <createTable tableName="comment">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="PK_comment" />
+            </column>
+            <column name="content" type="${clob.type}" />
+            <column name="status" type="java.sql.Types.VARCHAR(128)" />
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false" />
+            </column>
+            <column name="lesson_id" type="BIGINT" />
+            <column name="timestamp_created" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+            <column name="timestamp_modified" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="comment_id_seq" minValue="1" startValue="1" incrementBy="1" />
+        <addForeignKeyConstraint baseTableName="comment" baseColumnNames="user_id" constraintName="fk_comment_user" referencedTableName="users" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="comment" baseColumnNames="lesson_id" constraintName="fk_comment_lesson" referencedTableName="lesson" referencedColumnNames="id" />
+    </changeSet>
+
 </databaseChangeLog>
