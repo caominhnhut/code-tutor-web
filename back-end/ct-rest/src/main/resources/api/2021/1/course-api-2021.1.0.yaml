@@ -394,12 +394,12 @@ components:
         amountOfLikes:
           description: The amount of likes.
           example: 20
-          type: number
+          type: integer
           format: int32
         amountOfComments:
           description: The amount of comments.
           example: 20
-          type: number
+          type: integer
           format: int32
         createdBy:
           description: The user creates this lesson.

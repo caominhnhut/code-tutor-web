@@ -1,7 +1,9 @@
 package com.vn.green.core.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -113,14 +115,31 @@ public class LessonServiceImpl implements LessonService {
     }
 
     @Override
-    public List<LessonDTO> getLessons() {
+    public List<LessonDTO> getLessons(long courseId) {
 
-        return null;
+        Optional<List<LessonEntity>> optionalLessonEntities = lessonRepository.findLessonsByCourse(courseId);
+
+        if (!optionalLessonEntities.isPresent()) {
+            return Collections.emptyList();
+        }
+
+        List<LessonEntity> lessonEntities = optionalLessonEntities.get();
+
+        return lessonEntities.stream().map(LessonMapper.INSTANCE::mapFromEntity).collect(Collectors.toList());
     }
 
     @Override
-    public List<LessonDTO> getLesson(Long id) {
+    public LessonDTO getLesson(long courseId, long lessonId) {
 
-        return null;
+        Optional<LessonEntity> optionalLessonEntity = lessonRepository.findByLessonIdAndCourse(lessonId, courseId);
+
+        if (!optionalLessonEntity.isPresent()) {
+            return null;
+        }
+
+        LessonEntity lessonEntity = optionalLessonEntity.get();
+        return LessonMapper.INSTANCE.mapFromEntity(lessonEntity);
     }
+
+
 }

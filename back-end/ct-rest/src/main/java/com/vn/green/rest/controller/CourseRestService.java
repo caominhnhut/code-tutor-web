@@ -48,11 +48,11 @@ public class CourseRestService {
 
             Long courseId = courseService.createCourse(courseDTO, file);
 
-            return new ResponseEntity(courseId, HttpStatus.CREATED);
+            return ResponseEntity.status(HttpStatus.CREATED).body(courseId);
 
         } catch (ValidationException exception) {
 
-            return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
         }
     }
 
@@ -67,13 +67,13 @@ public class CourseRestService {
             CourseDTO courseDTO = CourseMapper.INSTANCE.mapFromModel(course);
             courseDTO.setId(courseId);
 
-            boolean updatedResult = courseService.updateCourse(courseDTO, file);
+            courseService.updateCourse(courseDTO, file);
 
-            return new ResponseEntity(updatedResult, HttpStatus.NO_CONTENT);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
         } catch (ValidationException exception) {
 
-            return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
         }
     }
 
@@ -84,7 +84,7 @@ public class CourseRestService {
 
         List<Course> courses = courseDTOS.stream().map(CourseMapper.INSTANCE::mapFromDTO).collect(Collectors.toList());
 
-        return new ResponseEntity(courses, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(courses);
     }
 
     @PostMapping(value = "/courses/{course-id}/lessons", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -99,11 +99,11 @@ public class CourseRestService {
 
             Long lessonId = lessonService.createLesson(lessonDTO, courseId, file);
 
-            return new ResponseEntity(lessonId, HttpStatus.CREATED);
+            return ResponseEntity.status(HttpStatus.CREATED).body(lessonId);
 
         } catch (ValidationException exception) {
 
-            return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
         }
     }
 
@@ -118,13 +118,36 @@ public class CourseRestService {
             LessonDTO lessonDTO = LessonMapper.INSTANCE.mapFromModel(lesson);
             lessonDTO.setId(lessonId);
 
-            boolean updatedResult = lessonService.updateLesson(lessonDTO, courseId, file);
+            lessonService.updateLesson(lessonDTO, courseId, file);
 
-            return new ResponseEntity(updatedResult, HttpStatus.NO_CONTENT);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
         } catch (ValidationException exception) {
 
-            return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
         }
+    }
+
+    @GetMapping(value = "/no-auth/courses/{course-id}/lessons")
+    public ResponseEntity getLessons(@PathVariable("course-id") long courseId) {
+
+        List<LessonDTO> lessonDTOS = lessonService.getLessons(courseId);
+        if (lessonDTOS.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
+        List<Lesson> lessons = lessonDTOS.stream().map(LessonMapper.INSTANCE::mapFromDTO).collect(Collectors.toList());
+        return ResponseEntity.status(HttpStatus.OK).body(lessons);
+    }
+
+    @GetMapping(value = "/no-auth/courses/{course-id}/lessons/{lesson-id}")
+    public ResponseEntity getLessons(@PathVariable("course-id") long courseId, @PathVariable("lesson-id") long lessonId) {
+
+        LessonDTO lessonDTO = lessonService.getLesson(courseId, lessonId);
+        if (lessonDTO == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(LessonMapper.INSTANCE.mapFromDTO(lessonDTO));
     }
 }

@@ -13,7 +13,7 @@ public interface LessonService {
 
     boolean updateLesson(LessonDTO lessonDTO, long courseId, MultipartFile file) throws ValidationException;
 
-    List<LessonDTO> getLessons();
+    List<LessonDTO> getLessons(long courseId);
 
-    List<LessonDTO> getLesson(Long id);
+    LessonDTO getLesson(long courseId, long lessonId);
 }

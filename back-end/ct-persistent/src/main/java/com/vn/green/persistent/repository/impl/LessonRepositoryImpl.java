@@ -49,4 +49,24 @@ public class LessonRepositoryImpl extends AbstractGenericDao<LessonEntity> imple
 
         return Optional.of(lessonEntities.get(0));
     }
+
+    @Override
+    public Optional<List<LessonEntity>> findLessonsByCourse(long courseId) {
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<LessonEntity> cq = cb.createQuery(LessonEntity.class);
+        Root<LessonEntity> root = cq.from(LessonEntity.class);
+        cq.select(root);
+
+        Predicate predicate = cb.equal(root.get(LessonEntity_.course).get(CourseEntity_.ID), courseId);
+        cq.where(predicate);
+
+        TypedQuery<LessonEntity> query = em.createQuery(cq);
+        List<LessonEntity> lessonEntities = query.getResultList();
+        if (lessonEntities == null || lessonEntities.isEmpty()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(lessonEntities);
+    }
 }
