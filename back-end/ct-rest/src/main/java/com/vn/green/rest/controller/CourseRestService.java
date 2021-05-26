@@ -16,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vn.green.common.dto.CourseDTO;
+import com.vn.green.common.dto.LessonDTO;
 import com.vn.green.core.service.CourseService;
+import com.vn.green.core.service.LessonService;
 import com.vn.green.course.models.Course;
+import com.vn.green.course.models.Lesson;
 import com.vn.green.rest.factory.mapper.CourseMapper;
+import com.vn.green.rest.factory.mapper.JsonUtility;
+import com.vn.green.rest.factory.mapper.LessonMapper;
 import com.vn.green.validation.ValidationException;
 
 @RestController()
@@ -30,23 +33,26 @@ public class CourseRestService {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private LessonService lessonService;
+
     @PostMapping(value = "/courses", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity createCourse(@RequestPart("course") String courseJson, @RequestPart(value = "file", required = false) MultipartFile file) {
 
         try {
 
-            Course course = convertFromJson(courseJson);
+            Course course = JsonUtility.convertFromJson(courseJson, Course.class);
 
             CourseDTO courseDTO = CourseMapper.INSTANCE.mapFromModel(course);
 
             Long courseId = courseService.createCourse(courseDTO, file);
 
-            return new ResponseEntity(courseId, HttpStatus.CREATED);
+            return ResponseEntity.status(HttpStatus.CREATED).body(courseId);
 
         } catch (ValidationException exception) {
 
-            return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
         }
     }
 
@@ -56,18 +62,18 @@ public class CourseRestService {
 
         try {
 
-            Course course = convertFromJson(courseJson);
+            Course course = JsonUtility.convertFromJson(courseJson, Course.class);
 
             CourseDTO courseDTO = CourseMapper.INSTANCE.mapFromModel(course);
             courseDTO.setId(courseId);
 
-            boolean updatedResult = courseService.updateCourse(courseDTO, file);
+            courseService.updateCourse(courseDTO, file);
 
-            return new ResponseEntity(updatedResult, HttpStatus.NO_CONTENT);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 
         } catch (ValidationException exception) {
 
-            return new ResponseEntity(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
         }
     }
 
@@ -78,16 +84,70 @@ public class CourseRestService {
 
         List<Course> courses = courseDTOS.stream().map(CourseMapper.INSTANCE::mapFromDTO).collect(Collectors.toList());
 
-        return new ResponseEntity(courses, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(courses);
     }
 
-    private Course convertFromJson(String json) throws ValidationException {
+    @PostMapping(value = "/courses/{course-id}/lessons", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity createLesson(@PathVariable("course-id") long courseId, @RequestPart("lesson") String lessonJson, @RequestPart(value = "file", required = false) MultipartFile file) {
 
         try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.readValue(json, Course.class);
-        } catch (JsonProcessingException e) {
-            throw new ValidationException("The data of course is incorrect format");
+
+            Lesson lesson = JsonUtility.convertFromJson(lessonJson, Lesson.class);
+
+            LessonDTO lessonDTO = LessonMapper.INSTANCE.mapFromModel(lesson);
+
+            Long lessonId = lessonService.createLesson(lessonDTO, courseId, file);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(lessonId);
+
+        } catch (ValidationException exception) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
         }
+    }
+
+    @PutMapping(value = "/courses/{course-id}/lessons/{lesson-id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity updateLesson(@PathVariable("course-id") long courseId, @PathVariable("lesson-id") long lessonId, @RequestPart("lesson") String lessonJson, @RequestPart(value = "file", required = false) MultipartFile file) {
+
+        try {
+
+            Lesson lesson = JsonUtility.convertFromJson(lessonJson, Lesson.class);
+
+            LessonDTO lessonDTO = LessonMapper.INSTANCE.mapFromModel(lesson);
+            lessonDTO.setId(lessonId);
+
+            lessonService.updateLesson(lessonDTO, courseId, file);
+
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+        } catch (ValidationException exception) {
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(exception.getMessage());
+        }
+    }
+
+    @GetMapping(value = "/no-auth/courses/{course-id}/lessons")
+    public ResponseEntity getLessons(@PathVariable("course-id") long courseId) {
+
+        List<LessonDTO> lessonDTOS = lessonService.getLessons(courseId);
+        if (lessonDTOS.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
+        List<Lesson> lessons = lessonDTOS.stream().map(LessonMapper.INSTANCE::mapFromDTO).collect(Collectors.toList());
+        return ResponseEntity.status(HttpStatus.OK).body(lessons);
+    }
+
+    @GetMapping(value = "/no-auth/courses/{course-id}/lessons/{lesson-id}")
+    public ResponseEntity getLessons(@PathVariable("course-id") long courseId, @PathVariable("lesson-id") long lessonId) {
+
+        LessonDTO lessonDTO = lessonService.getLesson(courseId, lessonId);
+        if (lessonDTO == null) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(LessonMapper.INSTANCE.mapFromDTO(lessonDTO));
     }
 }

@@ -21,6 +21,7 @@ import com.vn.green.persistent.repository.DocumentRepository;
 import com.vn.green.validation.SupportType;
 import com.vn.green.validation.ValidationException;
 import com.vn.green.validation.Validator;
+import com.vn.green.validation.ValidatorProvider;
 
 @Service
 public class DocumentServiceImpl implements DocumentService {
@@ -37,10 +38,13 @@ public class DocumentServiceImpl implements DocumentService {
     @Value("${download.url}")
     private String downloadUrl;
 
+    @Autowired
+    private ValidatorProvider validatorProvider;
+
     @Override
     public DocumentEntity storeImage(MultipartFile file) throws ValidationException {
 
-        executeValidation(file);
+        validatorProvider.executeValidation(file, SupportType.DOCUMENT);
 
         DocumentEntity documentEntity = new DocumentEntity();
 
@@ -63,7 +67,7 @@ public class DocumentServiceImpl implements DocumentService {
     @Override
     public boolean updateImage(MultipartFile file, String filename) throws ValidationException {
 
-        executeValidation(file);
+        validatorProvider.executeValidation(file, SupportType.DOCUMENT);
 
         storeFileToDirectory(file, filename);
 
@@ -74,15 +78,6 @@ public class DocumentServiceImpl implements DocumentService {
     public byte[] loadFileByName(String filename) throws IOException {
 
         return Files.readAllBytes(Paths.get(String.format("%s\\%s", photoPath, filename)));
-    }
-
-    private void executeValidation(MultipartFile multipartFile) throws ValidationException {
-
-        for (Validator validator : validators) {
-            if (validator.getSupportedTypes().contains(SupportType.DOCUMENT)) {
-                validator.validate(multipartFile);
-            }
-        }
     }
 
     private String uniqueFilename(String filename) {
