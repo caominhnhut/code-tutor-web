@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -97,10 +98,35 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/api/2021/1/authentication-api-2021.1.0.yaml</inputSpec>
+                            <inputSpec>
+                                ${project.basedir}/src/main/resources/api/2021/1/authentication-api-2021.1.0.yaml
+                            </inputSpec>
                             <generatorName>jaxrs-spec</generatorName>
-                            <apiPackage>com.vn.green.authentication.models</apiPackage>
+                            <apiPackage>com.vn.green.authentication.api</apiPackage>
                             <modelPackage>com.vn.green.authentication.models</modelPackage>
+                            <generateApiDocumentation>false</generateApiDocumentation>
+                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <generateModels>true</generateModels>
+                            <generateApis>false</generateApis>
+                            <configOptions>
+                                <interfaceOnly>true</interfaceOnly>
+                                <useSwaggerAnnotations>false</useSwaggerAnnotations>
+                                <java8>true</java8>
+                                <sourceFolder>api</sourceFolder>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>courses-definition</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/api/2021/1/courses-2021.1.0.yaml
+                            </inputSpec>
+                            <generatorName>jaxrs-spec</generatorName>
+                            <apiPackage>com.vn.green.courses.api</apiPackage>
+                            <modelPackage>com.vn.green.courses.models</modelPackage>
                             <generateApiDocumentation>false</generateApiDocumentation>
                             <generateSupportingFiles>false</generateSupportingFiles>
                             <generateModels>true</generateModels>
