@@ -122,7 +122,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/api/2021/1/courses-2021.1.0.yaml
+                            <inputSpec>${project.basedir}/src/main/resources/api/2021/1/courses-api-2021.1.0.yaml
                             </inputSpec>
                             <generatorName>jaxrs-spec</generatorName>
                             <apiPackage>com.vn.green.courses.api</apiPackage>
