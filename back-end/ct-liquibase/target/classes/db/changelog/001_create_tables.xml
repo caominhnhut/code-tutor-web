@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="authority table" author="Nhut.Nguyen">
+        <createTable tableName="authority">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="PK_authority" />
+            </column>
+            <column name="name" type="java.sql.Types.VARCHAR(128)" />
+            <column name="timestamp_created" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+            <column name="timestamp_modified" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="authority_id_seq" minValue="1" startValue="1" incrementBy="1" />
+    </changeSet>
+
+    <changeSet id="users table" author="Nhut.Nguyen">
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="PK_users" />
+            </column>
+            <column name="email" type="java.sql.Types.VARCHAR(128)" />
+            <column name="password" type="java.sql.Types.VARCHAR(128)" />
+            <column name="description" type="java.sql.Types.VARCHAR(128)" />
+            <column name="timestamp_created" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+            <column name="timestamp_modified" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="users_id_seq" minValue="1" startValue="1" incrementBy="1" />
+    </changeSet>
+
+    <changeSet id="authority_role table" author="Nhut.Nguyen">
+        <createTable tableName="authority_role">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false" />
+            </column>
+            <column name="user_id" type="BIGINT" />
+            <column name="authority_id" type="BIGINT" />
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="authority_role" baseColumnNames="user_id" constraintName="fk_authority_role_users" referencedTableName="users" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="authority_role" baseColumnNames="authority_id" constraintName="fk_authority_role_authority" referencedTableName="authority" referencedColumnNames="id" />
+    </changeSet>
+
+    <changeSet id="document table" author="Nhut.Nguyen">
+        <createTable tableName="document">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" primaryKeyName="PK_document" />
+            </column>
+            <column name="file_name" type="java.sql.Types.VARCHAR(128)" />
+            <column name="file_type" type="java.sql.Types.VARCHAR(128)" />
+            <column name="download_uri" type="java.sql.Types.VARCHAR(128)" />
+            <column name="timestamp_created" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+            <column name="timestamp_modified" type="DATETIME">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createSequence sequenceName="document_id_seq" minValue="1" startValue="1" incrementBy="1" />
+    </changeSet>
+
+</databaseChangeLog>

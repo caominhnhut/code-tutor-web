@@ -1,0 +1,130 @@
+openapi: "3.0.2"
+info:
+  title: Authentication API
+  description: This service exposes the authentication and authorization.
+  version: '2021.1.0'
+  x-api-id: api-v0001
+  x-audience: code-tutor-internal
+servers:
+  - url: '{server}'
+paths:
+  /authenticate:
+    post:
+      summary: Authentication serivce
+      description: Send credential for authentication
+      operationId: authenticate
+      tags:
+        - Authentication
+      requestBody:
+        $ref: '#/components/requestBodies/Credential'
+      responses:
+        '200':
+          $ref: '#/components/responses/Authentication'
+        '400':
+          $ref: '#/components/responses/Problem'
+        '401':
+          $ref: '#/components/responses/Problem'
+        '403':
+          $ref: '#/components/responses/Problem'
+        '404':
+          $ref: '#/components/responses/Problem'
+        '500':
+          $ref: '#/components/responses/Problem'
+        '501':
+          $ref: '#/components/responses/Problem'
+        default:
+          $ref: '#/components/responses/Problem'
+
+components:
+
+  headers:
+    X-Supported-Versions:
+      description: A comma separated list of API versions supported by this resource method, referencing the "api-version" in the Content-Type.
+      schema:
+        type: string
+      example: '2020.1.0'
+
+  requestBodies:
+
+    Credential:
+      description: An object containing the details of a credential.
+      required: true
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/Credential'
+
+  responses:
+
+    Authentication:
+      description: OK
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/Authentication'
+
+    Problem:
+      description: A generic problem response.
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/Problem'
+
+  schemas:
+    Problem:
+      description: A generic problem response describing a client or server problem.
+      required:
+        - title
+        - status
+        - detail
+      properties:
+        title:
+          description: A summary of the problem.
+          type: string
+          example: Service Unavailable
+        status:
+          description: The HTTP status code.
+          type: integer
+          format: int32
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 503
+        detail:
+          description: A detail of problem.
+          type: string
+          example: Connection time out
+
+    Credential:
+      description: An object which contains details about a credential.
+      required:
+        - username
+        - password
+      properties:
+        username:
+          description: The of username account.
+          example: 'guess@example.com'
+          type: string
+          maxLength: 255
+        password:
+          description: The password of account.
+          example: xxxxxxxx
+          type: string
+          maxLength: 20
+
+    Authentication:
+      description: The information of authentication.
+      required:
+        - token
+        - expiredIn
+      properties:
+        token:
+          description: The token value.
+          example: 'aaa.bbb.ccc'
+          type: string
+          maxLength: 255
+        expiredIn:
+          description: The time that specifies expriration of the token.
+          example: 600
+          type: integer
+          format: int64

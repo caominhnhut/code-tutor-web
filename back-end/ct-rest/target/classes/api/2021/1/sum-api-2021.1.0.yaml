@@ -1,0 +1,127 @@
+openapi: "3.0.2"
+info:
+  title: Sum API
+  description: This service exposes the api of sum.
+  version: '2021.1.0'
+  x-api-id: api-v0001
+  x-audience: code-tutor-internal
+servers:
+  - url: '{server}'
+paths:
+
+  /sum:
+    get:
+      summary: Sum of two numbers .
+      description: The api is used for calculating of two numbers.
+      operationId: sum
+      tags:
+        - Sum
+      parameters:
+        - $ref: '#/components/parameters/FirstNumberPathParam'
+        - $ref: '#/components/parameters/SecondNumberPathParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/Result'
+
+components:
+
+  headers:
+    X-Supported-Versions:
+      description: A comma separated list of API versions supported by this resource method, referencing the "api-version" in the Content-Type.
+      schema:
+        type: string
+      example: '2020.1.0'
+
+  parameters:
+    FirstNumberPathParam:
+      name: first-number
+      required: false
+      description: The first number.
+      example: 2
+      in: query
+      schema:
+        $ref: '#/components/schemas/MyNumber'
+
+    SecondNumberPathParam:
+      name: second-number
+      required: false
+      description: The second number.
+      example: 3
+      in: query
+      schema:
+        $ref: '#/components/schemas/MyNumber'
+
+  responses:
+
+    Result:
+      description: OK
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/Result'
+
+    Problem:
+      description: A generic problem response.
+      content:
+        application/json;api-version=2021.1.0:
+          schema:
+            $ref: '#/components/schemas/Problem'
+
+  schemas:
+
+    Problem:
+      description: A generic problem response describing a client or server problem.
+      required:
+        - title
+        - status
+        - detail
+      properties:
+        title:
+          description: A summary of the problem.
+          type: string
+          example: Service Unavailable
+        status:
+          description: The HTTP status code.
+          type: integer
+          format: int32
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 503
+        detail:
+          description: A detail of problem.
+          type: string
+          example: Connection time out
+
+    MyNumber:
+      description: First number for calculation.
+      required:
+        - value
+      properties:
+        value:
+          description: First number for calculation.
+          example: 2
+          type: integer
+          format: int32
+
+    Result:
+      description: The result of calculation.
+      required:
+        - name
+        - description
+      properties:
+        firstNumber:
+          description: First number.
+          example: 2
+          type: integer
+          format: int32
+        secondNumber:
+          description: Second number.
+          example: 3
+          type: integer
+          format: int32
+        result:
+          description: Result.
+          example: 5
+          type: integer
+          format: int32

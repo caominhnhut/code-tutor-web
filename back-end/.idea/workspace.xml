@@ -4,18 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0863f775-7e90-4f44-a534-50ffea25c079" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dev.Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/dev.Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-    </list>
+    <list default="true" id="0863f775-7e90-4f44-a534-50ffea25c079" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -49,7 +49,7 @@
       <recent name="$PROJECT_DIR$/ct-liquibase/src/main/resources/db/changelog" />
     </key>
   </component>
-  <component name="RunManager" selected="Maven.code-tutor-build">
+  <component name="RunManager" selected="Application.CodeTutorApplication">
     <configuration name="CodeTutorApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.vn.green.rest.CodeTutorApplication" />
       <module name="ct-rest" />
@@ -160,11 +160,6 @@
           <url>file://$PROJECT_DIR$/ct-core/src/main/java/com/vn/green/core/user/service/UserDetailService.java</url>
           <line>19</line>
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/ct-rest/src/main/java/com/vn/green/rest/controller/AuthenticationRestService.java</url>
-          <line>28</line>
-          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
